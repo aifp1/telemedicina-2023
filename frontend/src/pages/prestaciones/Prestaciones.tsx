@@ -1,7 +1,8 @@
-import React from 'react'
-import { Col, Container, Dropdown, Row } from 'react-bootstrap'
+import { useState } from "react";
 
 export const Prestaciones = () => {
+    const [categoria, setCategoria] = useState('-- CATEGORÍA --');
+    const [prestacion, setPrestacion] = useState('-- PRESTACIONES --');
     const categorias = [
         {
             nombreCategoria: 'Receta de lentes',
@@ -16,51 +17,55 @@ export const Prestaciones = () => {
     function cargarCategorias() {
         const items = [];
         for (let index = 0; index < categorias.length; index++) {
-            items.push(<Dropdown.Item key={categorias[index].codigoCategoria}>{categorias[index].nombreCategoria}</Dropdown.Item>)
+            items.push(<li><a className='dropdown-item'  key={categorias[index].codigoCategoria}>{categorias[index].nombreCategoria}</a></li>)
         }
         return items;
     }
 
+    function cambiarDropdownCategoria(event){
+        // console.log("Event: ", event.target.textContent);
+        setCategoria(event.target.textContent)
+    }
+    function cambiarDropdownPrestaciones(event){
+        setPrestacion(event.target.textContent);
+    }
+
   return (
-    <Container fluid className='text-center'>
-        <Row className='text-center align-items-center justify-content-center'>
-            <Col xs={12} className='mb-4'>
-                <Row>
-                    <Col xs={12}>
-                        <p style={{ color: '#ffffff' }}>Seleccionar categor&iacute;a</p>
-                    </Col>
-                    <Col xs={12}>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                                --SELECCIONAR--
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                {cargarCategorias()}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Col>
-                </Row>
-            </Col>
-            <Col xs={12} className='mb-4'>
-                <Row>
-                    <Col xs={12}>
-                        <p style={{ color: '#ffffff' }}>Seleccionar prestaciones</p>
-                    </Col>
-                    <Col xs={12}>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                                --SELECCIONAR--
-                            </Dropdown.Toggle>
-
-                            <Dropdown.Menu>
-                                {cargarCategorias()}
-                            </Dropdown.Menu>
-                        </Dropdown>
-                    </Col>
-                </Row>                
-            </Col>
-        </Row>
-    </Container>
+    <div className="row">
+        <div className="col-12">
+            <div className="row">
+                <div className="col-12">
+                    <p className='mb-1' style={{ color: '#ffffff' }}>Seleccionar categor&iacute;a</p>
+                </div>
+                <div className="col-12">
+                    <div className="dropdown mb-4">
+                        <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                            {categoria}
+                        </button>
+                        <ul className='dropdown-menu' onClick={cambiarDropdownCategoria}>
+                            {cargarCategorias()}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div className="col-12">
+            <div className="row">
+                <div className="col-12">
+                    <p className='mb-1' style={{ color: '#ffffff' }}>Seleccionar prestaciones</p>
+                </div>
+                <div className="col-12">
+                    <div className="dropdown mb-4">
+                        <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                            {prestacion}
+                        </button>
+                        <ul className='dropdown-menu' onClick={cambiarDropdownPrestaciones}>
+                            {cargarCategorias()}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
   )
 }

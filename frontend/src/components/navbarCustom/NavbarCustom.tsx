@@ -1,12 +1,14 @@
-import React from 'react'
-import { Container, Navbar } from 'react-bootstrap'
-
 export const NavbarCustom = () => {
   return (
-    <Navbar expand="xs" className="bg-body-tertiary">
-        <Container>
-            <Navbar.Brand><img src='https://www.redsaludpopular.cl/wp-content/uploads/2021/10/MARCA-HORIZONTALRSP-300x112.png'></img></Navbar.Brand>
-        </Container>
-    </Navbar>
+    <nav className='navbar bg-body-tertiary'>
+      <div className="container-fluid">
+        <a className=" navbar-brand h1 text-start m-0 text-secondary">
+          RESERVA DE CITAS
+        </a>
+        <a className='navbar-brand text-end m-0 w-25'>
+          <img className="mw-100 mh-100 m-1" src="https://www.redsaludpopular.cl/wp-content/uploads/2021/10/MARCA-HORIZONTALRSP-300x112.png" />
+        </a>
+      </div>      
+    </nav>
   )
 }

@@ -1,7 +1,7 @@
-import React from 'react'
-import { Col, Container, Dropdown, Row } from 'react-bootstrap'
+import { useState } from "react";
 
 export const Profesional = () => {
+    const [profesional, setProfesional] = useState('-- PROFESIONAL --')
     const profesionales = [
         {
             nombreProfesional: 'Benjamin',
@@ -15,28 +15,29 @@ export const Profesional = () => {
     function cargarProfesionales(){
         const items = [];
         for (let index = 0; index < profesionales.length; index++) {
-            items.push(<Dropdown.Item key={profesionales[index].codigoProfesional}>{profesionales[index].nombreProfesional}</Dropdown.Item>)
+            items.push(<li><a className='dropdown-item' key={profesionales[index].codigoProfesional}>{profesionales[index].nombreProfesional}</a></li>)
         }
         return items;
     }
+    function cambiarDropdownProfesional(event){
+        console.log("Event: ", event.target.value)
+        setProfesional(event.target.textContent);
+    }
   return (
-    <Container fluid className='text-center'>
-        <Row className='text-center align-items-center justify-content-center'>
-            <Col xs={12}>
-                <p style={{ color: '#ffffff' }}>Seleccionar profesional</p>
-            </Col>
-            <Col xs={12} className='mb-4'>
-                <Dropdown>
-                    <Dropdown.Toggle variant="secondary" id="dropdown-basic">
-                        --SELECCIONAR--
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                        {cargarProfesionales()}
-                    </Dropdown.Menu>
-                </Dropdown>                
-            </Col>
-        </Row>
-    </Container>
+    <div className="row mb-4">
+        <div className="col-12">
+            <p style={{ color: '#ffffff' }}> Seleccionar profesional</p>
+        </div>
+        <div className="col-12">
+            <div className="dropdown">
+                <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                    {profesional}
+                </button>
+                <ul className='dropdown-menu' onClick={cambiarDropdownProfesional}>
+                    {cargarProfesionales()}                    
+                </ul>
+            </div>
+        </div>
+    </div>
   )
 }

@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Prestaciones } from './pages/prestaciones/Prestaciones'
-import { Button, Col, Container, Row } from 'react-bootstrap'
 import { Profesional } from './pages/profesional/Profesional';
 import { NavbarCustom } from './components/navbarCustom/NavbarCustom';
 import { FooterCustom } from './components/footerCustom/FooterCustom';
@@ -24,19 +23,19 @@ const App = () => {
   }
   return (
     <div>
-    <NavbarCustom></NavbarCustom>
-    <Container fluid className='text-center general'>
-      {seleccionarPagina()}
-      <Row className='text-center align-items-center justify-content-center mu-3'>
-        <Col xs={3}>
-          <Button variant="danger" onClick={paginaAtras}>Atras</Button>
-        </Col>
-        <Col xs={3}>
-          <Button variant="success" onClick={paginaSiguiente}>Siguiente</Button>
-        </Col>
-      </Row>
-    </Container>
-    {/* <FooterCustom></FooterCustom> */}
+      <NavbarCustom></NavbarCustom>
+      <div className="container-fluid text-center general p-4">
+        <div className="row text-center align-items-center justify-content-center my-3">
+          <div className="col-12">
+            {seleccionarPagina()}
+          </div>
+          <div className="col-12">
+            <button type='button' className='btn btn-danger mx-4' onClick={paginaAtras}>Atras</button>
+            <button type='button' className='btn btn-success mx-4' onClick={paginaSiguiente}>Siguiente</button>
+          </div>
+        </div>
+      </div>
+      <FooterCustom></FooterCustom>
     </div>
   )
 }
