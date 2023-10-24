@@ -7,14 +7,26 @@ require('dotenv').config();
 
 const admins = require('./src/routes/administrador.router');
 const auth = require('./src/routes/autorizacion.router');
+const categorias = require('./src/routes/categorias.router');
+const prestaciones = require('./src/routes/prestaciones.router');
 
 const app = express();
+
+app.use(cors({
+    origin: process.env.CORS_ORIGIN,
+    credentials: true,
+}));
 
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(cookieParser());
 
+
+console.log("Cors: ", process.env.CORS_ORIGIN)
+
 app.use('/api', admins);
 app.use('/api', auth);
+app.use('/api', categorias);
+app.use('/api', prestaciones);
 
 module.exports = app;

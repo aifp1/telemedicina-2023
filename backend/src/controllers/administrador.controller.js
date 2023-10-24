@@ -42,8 +42,20 @@ async function addAdmin(request, response){
     }
 }
 
+async function deleteAdmin(request, response){
+    try {
+        const { id_autorizacion } = request.body;
+        const deletAdmin = await pool.query('delete from administrador where id_autorizacion = ?', id_autorizacion);
+        console.log("DeleteAdmin: ", deletAdmin);
+        return request.json('ok');
+    } catch (error) {
+        console.log("Error: ", error);        
+    }
+}
+
 module.exports = {
     getAdmins,
     getAdmin,
     addAdmin,
+    deleteAdmin,
 }

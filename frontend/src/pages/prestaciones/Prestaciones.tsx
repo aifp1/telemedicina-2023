@@ -1,36 +1,51 @@
-import { useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
+import { getCategorias } from "../../api/categorias";
+import { getPrestaciones } from "../../api/prestaciones";
 
 export const Prestaciones = () => {
     const [categoria, setCategoria] = useState('-- CATEGORÍA --');
     const [prestacion, setPrestacion] = useState('-- PRESTACIONES --');
-    const categorias = [
-        {
-            nombreCategoria: 'Receta de lentes',
-            codigoCategoria: 1,
-        },
-        {
-            nombreCategoria: 'Audifonos Clinicos',
-            codigoCategoria: 2,
-        }
-    ];
+    const [categorias, setCategorias] = useState([]);
+    const [prestaciones, setPrestaciones] = useState([]);
+    const [elementosLi, setElementosLi] = useState<ReactNode[]>([]);
+    const [evento, setEvento] = useState(false);
 
+    useEffect(() => {
+      getCategorias.then(function(response){
+        setCategorias(response.data);
+      });
+      getPrestaciones.then(function(response){
+        setPrestaciones(response.data);
+      })
+    }, []);
+  
     function cargarCategorias() {
         const items = [];
         for (let index = 0; index < categorias.length; index++) {
-            items.push(<li><a className='dropdown-item'  key={categorias[index].codigoCategoria}>{categorias[index].nombreCategoria}</a></li>)
+            items.push(<li><a className='dropdown-item' key={categorias[index].id_categoria} id={categorias[index].id_categoria}>{categorias[index]?.nombre_categoria}</a></li>)
         }
         return items;
     }
-
-    function cambiarDropdownCategoria(event){
-        // console.log("Event: ", event.target.textContent);
-        setCategoria(event.target.textContent)
+    function cargarPrestaciones(id_categoria: number) {
+        const items = [];
+        prestaciones[id_categoria].data.map(prestacion => {
+            items.push(<li><a className='dropdown-item' key={prestacion.id_prestacion} id={prestacion.id_prestacion}>{prestacion.nombre_prestacion}</a></li>)
+        })
+        setElementosLi(items);
+    }    
+    
+    async function cambiarDropdownCategoria(event){
+        setElementosLi([]);
+        setPrestacion('-- PRESTACIONES --');
+        setCategoria(event.target.textContent);
+        cargarPrestaciones(event.target.id);
+        setEvento(true);
     }
     function cambiarDropdownPrestaciones(event){
         setPrestacion(event.target.textContent);
     }
-
-  return (
+    
+    return (
     <div className="row">
         <div className="col-12">
             <div className="row">
@@ -49,23 +64,23 @@ export const Prestaciones = () => {
                 </div>
             </div>
         </div>
-        <div className="col-12">
-            <div className="row">
-                <div className="col-12">
-                    <p className='mb-1' style={{ color: '#ffffff' }}>Seleccionar prestaciones</p>
-                </div>
-                <div className="col-12">
-                    <div className="dropdown mb-4">
-                        <button className='btn btn-secondary dropdown-toggle' type='button' data-bs-toggle='dropdown' aria-expanded='false'>
-                            {prestacion}
-                        </button>
-                        <ul className='dropdown-menu' onClick={cambiarDropdownPrestaciones}>
-                            {cargarCategorias()}
-                        </ul>
+            <div className="col-12">
+                <div className="row">
+                    <div className="col-12">
+                        <p className='mb-1' style={{ color: '#ffffff' }}>Seleccionar prestaciones</p>
+                    </div>
+                    <div className="col-12">
+                        <div className="dropdown mb-4">
+                            <button className='btn btn-secondary w-sm-auto dropdown-toggle text-wrap' type='button' data-bs-toggle='dropdown' aria-expanded='false' disabled={evento ? false: true}>
+                                {prestacion}
+                            </button>
+                            <ul className='dropdown-menu w-sm-auto' onClick={cambiarDropdownPrestaciones} >
+                                {elementosLi.map(elementoLi => elementoLi)}
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
   )
 }
