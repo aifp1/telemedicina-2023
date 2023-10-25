@@ -15,13 +15,25 @@ export const Inicio = () => {
         return <Prestaciones></Prestaciones>
       case 1:
         return <Profesional></Profesional>
+      case 2:
+        return <div>Fecha</div>
+      case 3:
+        return <div>Paciente</div>
+      case 4:
+        return <div>Pago</div>
+      case 5:
+        return <div>Detalle</div>
     }
   }
   function paginaSiguiente(){
-    setPagina(pagina + 1);
+    if((pagina >= 0) && (pagina < 5)){
+      setPagina(pagina + 1);
+    }
   }
   function paginaAtras(){
-    setPagina(pagina - 1);
+    if((pagina > 0) && (pagina <= 5)){
+      setPagina(pagina - 1);
+    }
   }
   return (
     <div>

@@ -1,9 +1,35 @@
+// import { useState } from 'react';
 import { NavbarCustom } from '../../components/navbarCustom/NavbarCustom';
 import { FooterCustom } from '../../components/footerCustom/FooterCustom';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from "../../context/AuthContext";
 import './Login.css'
+import { useEffect } from 'react';
 
 export const Login = () => {
+    const { signin, isAuthenticated, user } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if(isAuthenticated) {
+            console.log("USer found in logiin: ", user.id_medico);
+            if(user.id_medico != undefined){
+                navigate('/auth/dashboard/medico', { state: {...user} });
+            }else{
+                navigate('/auth/dashboard/admin', { state: {...user} });
+            }
+        }
+            
+      }, [isAuthenticated])
+    
+    const handleSubmit = async(e) =>{
+        signin({email: e.target[0].value, password: e.target[1].value});
+        e.preventDefault();
+        // const resultado = await login({email: e.target[0].value, password: e.target[1].value});
+        // console.log("Resultado: ", resultado.data);
+        // <Redirect to='/login/auth/dashboard/admin' state={{ ...resultado.data }}/>
+    }
+
   return (
     <div>
         <NavbarCustom />
@@ -11,7 +37,7 @@ export const Login = () => {
             <Link to='/' type='button' className='btn btn-danger mb-2'>Atras</Link>
             <div className='border-bottom mb-4'></div>
             <div className="container-sm">
-                <form>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="exampleInputEmail1" className="form-label">Correo Electronico</label>
                         <input type="email" className="form-control" id="exampleInputEmail1" placeholder='administrador@administrador.cl'/>

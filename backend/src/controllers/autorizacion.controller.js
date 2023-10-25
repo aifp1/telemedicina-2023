@@ -30,8 +30,20 @@ async function loginAdmin(request, response){
         const isMatch = await bcrypt.compareSync(password, userFound[0][0].password_autorizacion);
         if(!isMatch) return response.status(400).json(['Password is not valid']);
         const token = await createAccessToken({id: userFound[0][0].id_autorizacion});
+        let profile;
+        console.log("ID: ", userFound[0][0].id_autorizacion);
+        try {
+           profile = await pool.query('select * from administrador where id_autorizacion = ?', userFound[0][0].id_autorizacion);
+        } catch (error) {
+            try {
+                profile = await pool.query('select * from medico where id_autorizacion = ?', userFound[0][0].id_autorizacion);            
+            } catch (error) {
+                console.log("Error: ", error);
+            }
+        }
+        console.log("Profile: ", profile);
         response.cookie('token', token);
-        return response.json('ok');        
+        return response.json({...profile[0][0]});        
     } catch (error) {
         console.log("Error: ", error);        
     }
