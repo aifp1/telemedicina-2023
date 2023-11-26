@@ -9,6 +9,7 @@ const admins = require('./src/routes/administrador.router');
 const auth = require('./src/routes/autorizacion.router');
 const categorias = require('./src/routes/categorias.router');
 const prestaciones = require('./src/routes/prestaciones.router');
+const medicos = require('./src/routes/medico.router');
 
 const app = express();
 
@@ -28,5 +29,6 @@ app.use('/api', admins);
 app.use('/api', auth);
 app.use('/api', categorias);
 app.use('/api', prestaciones);
+app.use('/api', medicos);
 
 module.exports = app;
