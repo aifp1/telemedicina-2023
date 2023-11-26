@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Prestaciones } from '../prestaciones/Prestaciones';
 import { Profesional } from '../profesional/Profesional';
+import { Horario } from '../horario/Horario';
 import { NavbarCustom } from '../../components/navbarCustom/NavbarCustom';
 import { FooterCustom } from '../../components/footerCustom/FooterCustom';
 import { Link } from 'react-router-dom';
@@ -16,7 +17,7 @@ export const Inicio = () => {
       case 1:
         return <Profesional></Profesional>
       case 2:
-        return <div>Fecha</div>
+        return <Horario></Horario>
       case 3:
         return <div>Paciente</div>
       case 4:

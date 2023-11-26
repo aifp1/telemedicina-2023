@@ -1,0 +1,11 @@
+.calendario{
+    border: 5px solid darkblue;
+    max-width: 350;
+    min-width: 150;
+    min-height: 50;
+    max-height: 350;
+    width: 200;
+    height: 200;
+    padding-left: 20%;
+    padding-right: 20%;
+}
