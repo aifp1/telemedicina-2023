@@ -7,6 +7,6 @@ const { getAdmin, addAdmin, deleteAdmin, getAdmins } = require('../controllers/a
 router.get('/admin/getAdmins', getAdmins);
 router.get('/admin/getAdmin/:id', getAdmin);
 router.post('/admin/addAdmin', addAdmin);
-router.post('/admin/deleteAdmin/:id', deleteAdmin);
+router.delete('/admin/deleteAdmin/:id', deleteAdmin);
 
 module.exports = router;

@@ -8,8 +8,11 @@ require('dotenv').config();
 const admins = require('./src/routes/administrador.router');
 const auth = require('./src/routes/autorizacion.router');
 const categorias = require('./src/routes/categorias.router');
-const prestaciones = require('./src/routes/prestaciones.router');
+const horario = require('./src/routes/horario.router');
 const medicos = require('./src/routes/medico.router');
+const paciente = require('./src/routes/paciente.router');
+const prestaciones = require('./src/routes/prestaciones.router');
+const horas_pacientes = require('./src/routes/horas_pacientes.router');
 
 const app = express();
 
@@ -28,7 +31,10 @@ console.log("Cors: ", process.env.CORS_ORIGIN)
 app.use('/api', admins);
 app.use('/api', auth);
 app.use('/api', categorias);
-app.use('/api', prestaciones);
+app.use('/api', horario);
+app.use('/api', horas_pacientes);
 app.use('/api', medicos);
+app.use('/api', paciente);
+app.use('/api', prestaciones);
 
 module.exports = app;

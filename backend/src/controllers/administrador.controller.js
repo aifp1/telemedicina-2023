@@ -17,7 +17,7 @@ async function getAdmin(request, response){
         console.log("Request params: ", request.params);
         const [result] = await pool.query('select * from administrador where id_administrador = ?', [request.params.id]);
         console.log("first: ", result);
-        return response.json('ok');
+        return response.json(result);
     } catch (error) {
         console.log("Error: ", error);        
     }
