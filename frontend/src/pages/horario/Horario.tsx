@@ -7,7 +7,7 @@ import * as dayjs from "dayjs";
 import { Grid } from "@mui/material";
 
 export const Horario = () => {
-    
+    const [selectedTimes, setSelectedTimes] = useState<Dayjs[]>([]);
     const [selectedDates, setSelectedDates] = useState<Dayjs[]>([]);
     const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
@@ -22,17 +22,30 @@ export const Horario = () => {
         return !selectedDates.some((selectedDate) => date.isSame(selectedDate, 'day'));
     };
 
-    const isRestrictedTime = (date: Dayjs) => {
-        // Verifica si la hora NO es la deseada
-        return selectedTime ? !date.isSame(selectedTime, 'hour') : false;
+    const isRestrictedTime = (value: Dayjs) => {
+        // Verifica si el tiempo NO es el deseado
+        console.log(value.format('MM-DD HH:mm'));
+        return !selectedTimes.some((selectedTime) => value.isSame(selectedTime, 'minute'));
     };
 
     const handleDateChange = (date: Dayjs | null) => {
+        setSelectedTimes([
+            dayjs().hour(15).minute(10),
+            dayjs().hour(17).minute(40),
+        ]);
+
         setSelectedDate(date);
+        setSelectedTime(null);
     };
 
     const handleTimeChange = (time: Dayjs | null) => {
-        setSelectedTime(time);
+        // Combina la fecha seleccionada con la hora seleccionada
+        if (time && selectedDate) {
+            const dateTime = selectedDate.hour(time.hour()).minute(time.minute());
+            setSelectedTime(dateTime);
+        } else {
+            setSelectedTime(time);
+        }
     };
 
     useEffect(() => {
@@ -61,10 +74,10 @@ export const Horario = () => {
                                 value={selectedDate}
                                 onChange={handleDateChange}
                             />
+                            <h4>{dayjs(selectedDate).format('DD/MM/YYYY')}</h4>
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <StaticTimePicker
-                                minutesStep={30}
                                 shouldDisableTime={isRestrictedTime}
                                 ampm={false}
                                 value={selectedTime}
@@ -75,5 +88,5 @@ export const Horario = () => {
                 </div>
             </div>
         </LocalizationProvider>
-    )
-}
+    );
+};
