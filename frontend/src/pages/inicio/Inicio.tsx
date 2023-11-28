@@ -9,13 +9,21 @@ import './Inicio.css';
 
 export const Inicio = () => {
     const [pagina, setPagina] = useState(0);
+    const [dataFromPage, setDataFromPage] = useState();
+
+  function passData(data){
+    console.log("Data: ", data);
+    setDataFromPage(data);
+  }
+
+
   function seleccionarPagina() {
     console.log("Pagina: ", pagina);
     switch(pagina){
       case 0: 
-        return <Prestaciones></Prestaciones>
+        return <Prestaciones onDataFromPage={passData} ></Prestaciones>
       case 1:
-        return <Profesional></Profesional>
+        return <Profesional data={dataFromPage}></Profesional>
       case 2:
         return <Horario></Horario>
       case 3:
