@@ -6,6 +6,8 @@ import { Administrador } from './pages/administrador/Administrador';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import { Medico } from './pages/medico/Medico';
+import { Categoriasadmin } from './pages/categorias-admin/Categoriasadmin';
+import { Prestacionesadmin } from './pages/prestaciones-admin/Prestacionesadmin';
 
 
 const App = () => {
@@ -18,6 +20,8 @@ const App = () => {
           <Route path='/login' element={<Login />}></Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/auth/dashboard/admin' element={<Administrador />}></Route>
+            <Route path='/auth/dashboard/admin/Categorias' element={<Categoriasadmin />}></Route>
+            <Route path='/auth/dashboard/admin/Prestaciones' element={<Prestacionesadmin />}></Route>
             <Route path='/auth/dashboard/medico' element={<Medico />}></Route>
           </Route>
         </Routes>

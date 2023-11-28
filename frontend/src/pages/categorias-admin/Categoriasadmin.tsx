@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React,{useEffect, useState } from "react";
+import { getCategorias,deleteCategoria } from "../../api/categorias";
 import { Link, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -16,27 +17,37 @@ import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
-import { Divider } from '@mui/material';
+import { Divider, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const Administrador = () => {
-  const location = useLocation();
-  console.log("Location: ", location);
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+export const Categoriasadmin = () => {
+    const [categorias, setCategorias] = useState([]);
 
-  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    useEffect(() => {
+      getCategorias.then(function(response){
+        setCategorias(response.data);
+      });
+      
+    }, []);
+    
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
-  return (
-    <Box sx={{ display: 'flex' }}>
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
+
+  
+
+    return (
+        <Box sx={{ display: 'flex' }}>
       <Drawer 
         variant="permanent"
         sx={{
@@ -116,8 +127,38 @@ export const Administrador = () => {
             </Box>
           </Toolbar>
         </AppBar>
-        {/* Contenido principal de la página */}
+        <Box sx={{ marginTop: '100px' }}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>ID</TableCell>
+                <TableCell>Nombre</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {console.log(categorias)}
+                {categorias.map((categoria) => (
+                  
+                    <TableRow key={categoria.id_categoria}>
+                    <TableCell>{categoria.id_categoria}</TableCell>
+                    <TableCell>{categoria.nombre_categoria}</TableCell>
+                    <TableCell>
+                    <Button variant="contained" color="error" onClick={() => handleDelete(categoria.id_categoria)}>
+                    Delete
+                    </Button>
+                    </TableCell>
+                    <TableCell>
+                        <Button variant="contained" color="primary" onClick={() => handleEdit(categoria.id_categoria)}>
+                        Edit
+                        </Button>
+                    </TableCell>
+                    </TableRow>
+                ))}
+                </TableBody>
+          </Table>
+        </Box>
       </Box>
     </Box>
-  );
-};
+    
+  )
+}
