@@ -2,13 +2,17 @@ import { ReactNode, useEffect, useState } from "react";
 import { getCategorias } from "../../api/categorias";
 import { getPrestaciones } from "../../api/prestaciones";
 
-export const Prestaciones = () => {
+export const Prestaciones = ({ onDataFromPage }) => {
     const [categoria, setCategoria] = useState('-- CATEGORÍA --');
     const [prestacion, setPrestacion] = useState('-- PRESTACIONES --');
     const [categorias, setCategorias] = useState([]);
     const [prestaciones, setPrestaciones] = useState([]);
     const [elementosLi, setElementosLi] = useState<ReactNode[]>([]);
     const [evento, setEvento] = useState(false);
+
+    const [sendData, setSendData] = useState({});
+    
+    // let senData: any = {};
 
     useEffect(() => {
       getCategorias.then(function(response){
@@ -35,14 +39,29 @@ export const Prestaciones = () => {
     }    
     
     async function cambiarDropdownCategoria(event){
+        // setSendData({
+        //     nombre_categoria: event.target.textContent,
+        //     id_categoria: event.target.id,
+        // });
         setElementosLi([]);
         setPrestacion('-- PRESTACIONES --');
         setCategoria(event.target.textContent);
         cargarPrestaciones(event.target.id);
-        setEvento(true);
+        setEvento(true);        
     }
     function cambiarDropdownPrestaciones(event){
         setPrestacion(event.target.textContent);
+        console.log("Send DAta: ", sendData);
+        const nuevoDato = {
+            id_prestacion: event.target.id,
+            nombre_prestacion: event.target.textContent,
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato);        
+        // enviarDatos();
+    }
+    function enviarDatos(){
+        console.log("Send Daaaata final: ", sendData);    
     }
     
     return (

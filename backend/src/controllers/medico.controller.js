@@ -13,7 +13,7 @@ async function getMedicos(request, response){
 
 async function getMedico(request, response){
     try {
-        const [result] = await pool.query('select * from medico where id_medico = ?', [request.params.id]);
+        const [result] = await pool.query('select * from medico where id_prestacion = ?', [request.params.id]);
         console.log("Result: ", result);
         return response.json(result);
     } catch (error) {

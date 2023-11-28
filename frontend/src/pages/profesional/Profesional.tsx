@@ -1,21 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getMedico } from "../../api/medico"
 
-export const Profesional = () => {
-    const [profesional, setProfesional] = useState('-- PROFESIONAL --')
-    const profesionales = [
-        {
-            nombreProfesional: 'Benjamin',
-            codigoProfesional: 1,
-        },
-        {
-            nombreProfesional: 'Camila',
-            codigoProfesional: 2,
-        },
-    ]
+export const Profesional = ({ data }) => {
+    const [profesional, setProfesional] = useState('-- PROFESIONAL --');
+    const [profesionales, setProfesionales] = useState([])
+    console.log("Data ya en profesional: ", data);
+
+    useEffect(() => {
+        console.log(data.id_prestacion);
+        getMedico(data.id_prestacion).then(function(response){
+            console.log("Response: ", response);
+            setProfesionales(response.data);
+        });        
+    }, []);
+    
+    // const profesionales = [
+    //     {
+    //         nombreProfesional: 'Benjamin',
+    //         codigoProfesional: 1,
+    //     },
+    //     {
+    //         nombreProfesional: 'Camila',
+    //         codigoProfesional: 2,
+    //     },
+    // ]
     function cargarProfesionales(){
         const items = [];
         for (let index = 0; index < profesionales.length; index++) {
-            items.push(<li><a className='dropdown-item' key={profesionales[index].codigoProfesional}>{profesionales[index].nombreProfesional}</a></li>)
+            items.push(<li><a className='dropdown-item' key={profesionales[index].id_medico}>{profesionales[index].nombres + ' ' + profesionales[index].apellidos}</a></li>)
         }
         return items;
     }
