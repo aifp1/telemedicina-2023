@@ -52,10 +52,9 @@ async function deleteHorario(request, response){
 
 async function getHoras(request, response){
     try{
-        const id_medico = request.params.id_medico;
+        const id_medico = request.params.id;
         const fecha = request.params.fecha;
-        console.log(id_medico, fecha)
-        const horas = await pool.query('select from horario where id_medico = ? and fecha = ?', [id_medico, fecha]);
+        const [ horas ] = await pool.query('select * from horario where id_medico = ? and fecha = ?', [id_medico, fecha]);
         console.log("horas: ", horas);
         return response.json(horas);
     } catch (error) {
