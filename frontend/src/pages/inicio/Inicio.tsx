@@ -12,7 +12,7 @@ export const Inicio = () => {
     const [dataFromPage, setDataFromPage] = useState();
 
   function passData(data){
-    console.log("Data: ", data);
+    //console.log("Data: ", data);
     setDataFromPage(data);
   }
 
@@ -23,9 +23,9 @@ export const Inicio = () => {
       case 0: 
         return <Prestaciones onDataFromPage={passData} ></Prestaciones>
       case 1:
-        return <Profesional data={dataFromPage}></Profesional>
+        return <Profesional data={dataFromPage} onDataFromPage={passData}></Profesional>
       case 2:
-        return <Horario></Horario>
+        return <Horario data={dataFromPage}></Horario>
       case 3:
         return <div>Paciente</div>
       case 4:

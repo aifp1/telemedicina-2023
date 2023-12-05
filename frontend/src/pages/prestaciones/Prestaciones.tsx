@@ -51,7 +51,7 @@ export const Prestaciones = ({ onDataFromPage }) => {
     }
     function cambiarDropdownPrestaciones(event){
         setPrestacion(event.target.textContent);
-        console.log("Send DAta: ", sendData);
+        //console.log("Send DAta: ", sendData);
         const nuevoDato = {
             id_prestacion: event.target.id,
             nombre_prestacion: event.target.textContent,

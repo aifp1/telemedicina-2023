@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { getMedico } from "../../api/medico"
 
-export const Profesional = ({ data }) => {
+export const Profesional = ({ data , onDataFromPage}) => {
     const [profesional, setProfesional] = useState('-- PROFESIONAL --');
     const [profesionales, setProfesionales] = useState([])
-    console.log("Data ya en profesional: ", data);
+    const [sendData, setSendData] = useState({});
+    //console.log("Data ya en profesional: ", data);
 
     useEffect(() => {
-        console.log(data.id_prestacion);
+        //console.log(data.id_prestacion);
         getMedico(data.id_prestacion).then(function(response){
-            console.log("Response: ", response);
+            //console.log("Response: ", response);
             setProfesionales(response.data);
         });        
     }, []);
@@ -27,13 +28,21 @@ export const Profesional = ({ data }) => {
     function cargarProfesionales(){
         const items = [];
         for (let index = 0; index < profesionales.length; index++) {
-            items.push(<li><a className='dropdown-item' key={profesionales[index].id_medico}>{profesionales[index].nombres + ' ' + profesionales[index].apellidos}</a></li>)
+            items.push(<li><a className='dropdown-item' key={profesionales[index].id_medico} id={profesionales[index].id_medico}>{profesionales[index].nombres + ' ' + profesionales[index].apellidos}</a></li>)
         }
         return items;
     }
     function cambiarDropdownProfesional(event){
-        console.log("Event: ", event.target.value)
+        //console.log("Event: ", event.target.value)
         setProfesional(event.target.textContent);
+        const nuevoDato = {
+            id_prestacion: data.id_prestacion,
+            nombre_prestacion: data.nombre_prestacion,
+            id_profesional: event.target.id,
+            nombre_profesional: event.target.textContent
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato); 
     }
   return (
     <div className="row mb-4">

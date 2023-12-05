@@ -1,255 +1,174 @@
--- MySQL dump 10.13  Distrib 8.1.0, for Win64 (x86_64)
---
--- Host: localhost    Database: telemedicina
--- ------------------------------------------------------
--- Server version	8.1.0
+mysqlimport  Ver 8.1.0 for Win64 on x86_64 (MySQL Community Server - GPL)
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8mb4 */;
-/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
-/*!40103 SET TIME_ZONE='+00:00' */;
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
 
---
--- Table structure for table `administrador`
---
+Loads tables from text files in various formats.  The base name of the
+text file must be the name of the table that should be used.
+If one uses sockets to connect to the MySQL server, the server will open and
+read the text file directly. In other cases the client will open the text
+file. The SQL command 'LOAD DATA INFILE' is used to import the rows.
 
-DROP TABLE IF EXISTS `administrador`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `administrador` (
-  `id_administrador` int NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(100) NOT NULL,
-  `apellidos` varchar(52) NOT NULL,
-  `id_autorizacion` int NOT NULL,
-  PRIMARY KEY (`id_administrador`),
-  KEY `id_autorizacion` (`id_autorizacion`),
-  CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`id_autorizacion`) REFERENCES `autorizacion` (`id_autorizacion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
+Usage: mysqlimport [OPTIONS] database textfile...
+Default options are read from the following files in the given order:
+C:\Windows\my.ini C:\Windows\my.cnf C:\my.ini C:\my.cnf C:\Program Files\MySQL\MySQL Server 8.1\my.ini C:\Program Files\MySQL\MySQL Server 8.1\my.cnf 
+The following groups are read: mysqlimport client
+The following options may be given as the first argument:
+--print-defaults        Print the program argument list and exit.
+--no-defaults           Don't read default options from any option file,
+                        except for login file.
+--defaults-file=#       Only read default options from the given file #.
+--defaults-extra-file=# Read this file after the global files are read.
+--defaults-group-suffix=#
+                        Also read groups with concat(group, suffix)
+--login-path=#          Read this path from the login file.
+  --bind-address=name IP address to bind to.
+  --character-sets-dir=name 
+                      Directory for character set files.
+  --default-character-set=name 
+                      Set the default character set.
+  -c, --columns=name  Use only these columns to import the data to. Give the
+                      column names in a comma separated list. This is same as
+                      giving columns to LOAD DATA INFILE.
+  -C, --compress      Use compression in server/client protocol.
+  -#, --debug[=#]     This is a non-debug version. Catch this and exit.
+  --debug-check       This is a non-debug version. Catch this and exit.
+  --debug-info        This is a non-debug version. Catch this and exit.
+  --default-auth=name Default authentication client-side plugin to use.
+  -d, --delete        First delete all rows from table.
+  --enable-cleartext-plugin 
+                      Enable/disable the clear text authentication plugin.
+  --fields-terminated-by=name 
+                      Fields in the input file are terminated by the given
+                      string.
+  --fields-enclosed-by=name 
+                      Fields in the import file are enclosed by the given
+                      character.
+  --fields-optionally-enclosed-by=name 
+                      Fields in the input file are optionally enclosed by the
+                      given character.
+  --fields-escaped-by=name 
+                      Fields in the input file are escaped by the given
+                      character.
+  -f, --force         Continue even if we get an SQL error.
+  -?, --help          Displays this help and exits.
+  -h, --host=name     Connect to host.
+  -i, --ignore        If duplicate unique key was found, keep old row.
+  --ignore-lines=#    Ignore first n lines of data infile.
+  --lines-terminated-by=name 
+                      Lines in the input file are terminated by the given
+                      string.
+  -L, --local         Read all files through the client.
+  -l, --lock-tables   Lock all tables for write (this disables threads).
+  --low-priority      Use LOW_PRIORITY when updating the table.
+  -p, --password[=name] 
+                      Password to use when connecting to server. If password is
+                      not given it's asked from the tty.
+  -,, --password1[=name] 
+                      Password for first factor authentication plugin.
+  -,, --password2[=name] 
+                      Password for second factor authentication plugin.
+  -,, --password3[=name] 
+                      Password for third factor authentication plugin.
+  -W, --pipe          Use named pipes to connect to server.
+  --plugin-dir=name   Directory for client-side plugins.
+  -P, --port=#        Port number to use for connection or 0 for default to, in
+                      order of preference, my.cnf, $MYSQL_TCP_PORT,
+                      /etc/services, built-in default (3306).
+  --protocol=name     The protocol to use for connection (tcp, socket, pipe,
+                      memory).
+  -r, --replace       If duplicate unique key was found, replace old row.
+  --shared-memory-base-name=name 
+                      Base name of shared memory.
+  -s, --silent        Be more silent.
+  -S, --socket=name   The socket file to use for connection.
+  --server-public-key-path=name 
+                      File path to the server public RSA key in PEM format.
+  --get-server-public-key 
+                      Get server public key
+  --ssl-mode=name     SSL connection mode.
+  --ssl-ca=name       CA file in PEM format.
+  --ssl-capath=name   CA directory.
+  --ssl-cert=name     X509 cert in PEM format.
+  --ssl-cipher=name   SSL cipher to use.
+  --ssl-key=name      X509 key in PEM format.
+  --ssl-crl=name      Certificate revocation list.
+  --ssl-crlpath=name  Certificate revocation list path.
+  --tls-version=name  TLS version to use, permitted values are: TLSv1.2,
+                      TLSv1.3
+  --ssl-fips-mode=name 
+                      SSL FIPS mode (applies only for OpenSSL); permitted
+                      values are: OFF, ON, STRICT
+  --tls-ciphersuites=name 
+                      TLS v1.3 cipher to use.
+  --ssl-session-data=name 
+                      Session data file to use to enable ssl session reuse
+  --ssl-session-data-continue-on-failed-reuse 
+                      If set to ON, this option will allow connection to
+                      succeed even if session data cannot be reused.
+  --tls-sni-servername=name 
+                      The SNI server name to pass to server
+  --use-threads=#     Load files in parallel. The argument is the number of
+                      threads to use for loading data.
+  -u, --user=name     User for login if not current user.
+  -v, --verbose       Print info about the various stages.
+  -V, --version       Output version information and exit.
+  --compression-algorithms=name 
+                      Use compression algorithm in server/client protocol.
+                      Valid values are any combination of
+                      'zstd','zlib','uncompressed'.
+  --zstd-compression-level=# 
+                      Use this compression level in the client/server protocol,
+                      in case --compression-algorithms=zstd. Valid range is
+                      between 1 and 22, inclusive. Default is 3.
 
---
--- Dumping data for table `administrador`
---
-
-LOCK TABLES `administrador` WRITE;
-/*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-INSERT INTO `administrador` VALUES (1,'test admin','8',8),(2,'test admin','9',9),(3,'test admin','10',10);
-/*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `autorizacion`
---
-
-DROP TABLE IF EXISTS `autorizacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `autorizacion` (
-  `id_autorizacion` int NOT NULL AUTO_INCREMENT,
-  `email_autorizacion` varchar(100) NOT NULL,
-  `password_autorizacion` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_autorizacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `autorizacion`
---
-
-LOCK TABLES `autorizacion` WRITE;
-/*!40000 ALTER TABLE `autorizacion` DISABLE KEYS */;
-INSERT INTO `autorizacion` VALUES (1,'test1@admin.cl','123456'),(2,'test2@admin.cl','$2b$10$X/afL2YtP6fuqA1GWeXzcuJxgcxMSfjUcrnla/zTCAwsESaniqhOe'),(3,'test3@admin.cl','$2b$10$.eKrVEfBYvWLvJ.fRwDRAOhGgU74MCcjZKVn62kDXlbs65g7C.bCm'),(4,'test4@admin.cl','$2b$10$FMAE2VG1RQa0kPHklmtRt.52Sno.vdUC4RqEzZKkEHkswgfuoxar.'),(5,'test5@admin.cl','$2b$10$O/AeGa4APEURSzoDWyNIAuMwqbeBdne7yrJn0cRsQYKv10j6vwgu2'),(6,'test6@admin.cl','$2b$10$Yvv2oW1zukGvBAcQw1u1hO7ie5FKIZsDXV5uJ.U4IsVNW1EKOCKhe'),(7,'test7@admin.cl','$2b$10$gRm74LOksxVYcaxn8ain5u2TEAEYVWNtCh9Yd9F7UN3og6Jx83x9m'),(8,'test8@admin.cl','$2b$10$ma22dxNeE.kcxxVB9NP3V.Dtg.weNxEMIUGgA3tHSWtkH/nZfpFtO'),(9,'test9@admin.cl','$2b$10$dpdX5M8275UZ/YDbnb99luY52Gbm0u.gb31nQ2h/jMiV3ImVpfcb.'),(10,'test10@admin.cl','$2b$10$jHYVHLbZU8WsavXtZ.89PuL4DPLMwymS114/KiyZPAFQB1caSWvu6');
-/*!40000 ALTER TABLE `autorizacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `categorias`
---
-
-DROP TABLE IF EXISTS `categorias`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categorias` (
-  `id_categoria` int NOT NULL AUTO_INCREMENT,
-  `nombre_categoria` varchar(30) NOT NULL,
-  PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `categorias`
---
-
-LOCK TABLES `categorias` WRITE;
-/*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` VALUES (1,'receta de lentes'),(2,'audifonos clinicos');
-/*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `horario`
---
-
-DROP TABLE IF EXISTS `horario`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `horario` (
-  `id_horario` int NOT NULL AUTO_INCREMENT,
-  `fecha` date NOT NULL,
-  `hora_inicial` time NOT NULL,
-  `duracion` int NOT NULL,
-  `hora_fin` time NOT NULL,
-  `estado` enum('ocupado','disponible','vacio') NOT NULL,
-  `id_paciente` int NOT NULL,
-  `id_medico` int NOT NULL,
-  PRIMARY KEY (`id_horario`),
-  KEY `id_paciente` (`id_paciente`),
-  KEY `id_medico` (`id_medico`),
-  CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `horario_ibfk_2` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `horario`
---
-
-LOCK TABLES `horario` WRITE;
-/*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-/*!40000 ALTER TABLE `horario` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `horas_paciente`
---
-
-DROP TABLE IF EXISTS `horas_paciente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `horas_paciente` (
-  `id_hora_paciente` int NOT NULL AUTO_INCREMENT,
-  `id_paciente` int NOT NULL,
-  `id_horario` int NOT NULL,
-  PRIMARY KEY (`id_hora_paciente`),
-  KEY `id_paciente` (`id_paciente`),
-  KEY `id_horario` (`id_horario`),
-  CONSTRAINT `horas_paciente_ibfk_1` FOREIGN KEY (`id_paciente`) REFERENCES `paciente` (`id_paciente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `horas_paciente_ibfk_2` FOREIGN KEY (`id_horario`) REFERENCES `horario` (`id_horario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `horas_paciente`
---
-
-LOCK TABLES `horas_paciente` WRITE;
-/*!40000 ALTER TABLE `horas_paciente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `horas_paciente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `medico`
---
-
-DROP TABLE IF EXISTS `medico`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `medico` (
-  `id_medico` int NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(100) NOT NULL,
-  `apellidos` varchar(52) NOT NULL,
-  `lugar_atencion` varchar(255) NOT NULL,
-  `id_prestacion` int NOT NULL,
-  `id_autorizacion` int NOT NULL,
-  `id_administrador` int NOT NULL,
-  PRIMARY KEY (`id_medico`),
-  KEY `id_prestacion` (`id_prestacion`),
-  KEY `id_autorizacion` (`id_autorizacion`),
-  KEY `id_administrador` (`id_administrador`),
-  CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`id_prestacion`) REFERENCES `prestaciones` (`id_prestacion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `medico_ibfk_2` FOREIGN KEY (`id_autorizacion`) REFERENCES `autorizacion` (`id_autorizacion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `medico_ibfk_3` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medico`
---
-
-LOCK TABLES `medico` WRITE;
-/*!40000 ALTER TABLE `medico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medico` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `paciente`
---
-
-DROP TABLE IF EXISTS `paciente`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `paciente` (
-  `id_paciente` int NOT NULL AUTO_INCREMENT,
-  `nombres` varchar(100) NOT NULL,
-  `apellidos` varchar(52) NOT NULL,
-  `fecha_nacimiento` date NOT NULL,
-  `email` varchar(100) NOT NULL,
-  `telefono` varchar(12) NOT NULL,
-  `comuna` enum('vi├▒a del mar','valparaiso','concon','quintero','casablanca') NOT NULL,
-  `prevision_salud` enum('fonasa','isapre') NOT NULL,
-  PRIMARY KEY (`id_paciente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `paciente`
---
-
-LOCK TABLES `paciente` WRITE;
-/*!40000 ALTER TABLE `paciente` DISABLE KEYS */;
-/*!40000 ALTER TABLE `paciente` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `prestaciones`
---
-
-DROP TABLE IF EXISTS `prestaciones`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `prestaciones` (
-  `id_prestacion` int NOT NULL AUTO_INCREMENT,
-  `nombre_prestacion` varchar(255) NOT NULL,
-  `id_categoria` int NOT NULL,
-  PRIMARY KEY (`id_prestacion`),
-  KEY `id_categoria` (`id_categoria`),
-  CONSTRAINT `prestaciones_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `prestaciones`
---
-
-LOCK TABLES `prestaciones` WRITE;
-/*!40000 ALTER TABLE `prestaciones` DISABLE KEYS */;
-INSERT INTO `prestaciones` VALUES (1,'tecn├│logo/a oftam├│logo/a (receta de lentes Plan Condell 1490)',1),(2,'control de aud├¡fonos',2),(3,'prueba de aud├¡fonos (Gratis)',2);
-/*!40000 ALTER TABLE `prestaciones` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2023-11-27 20:25:48
+Variables (--variable-name=value)
+and boolean options {FALSE|TRUE}          Value (after reading options)
+----------------------------------------- --------------------------------
+bind-address                              (No default value)
+character-sets-dir                        (No default value)
+default-character-set                     auto
+columns                                   (No default value)
+compress                                  FALSE
+default-auth                              (No default value)
+delete                                    FALSE
+enable-cleartext-plugin                   FALSE
+fields-terminated-by                      (No default value)
+fields-enclosed-by                        (No default value)
+fields-optionally-enclosed-by             (No default value)
+fields-escaped-by                         (No default value)
+force                                     FALSE
+host                                      (No default value)
+ignore                                    FALSE
+ignore-lines                              0
+lines-terminated-by                       (No default value)
+local                                     FALSE
+lock-tables                               FALSE
+low-priority                              FALSE
+plugin-dir                                (No default value)
+port                                      0
+replace                                   FALSE
+shared-memory-base-name                   (No default value)
+silent                                    FALSE
+socket                                    (No default value)
+server-public-key-path                    (No default value)
+get-server-public-key                     FALSE
+ssl-ca                                    (No default value)
+ssl-capath                                (No default value)
+ssl-cert                                  (No default value)
+ssl-cipher                                (No default value)
+ssl-key                                   (No default value)
+ssl-crl                                   (No default value)
+ssl-crlpath                               (No default value)
+tls-version                               (No default value)
+tls-ciphersuites                          (No default value)
+ssl-session-data                          (No default value)
+ssl-session-data-continue-on-failed-reuse FALSE
+tls-sni-servername                        (No default value)
+use-threads                               0
+user                                      root
+verbose                                   FALSE
+compression-algorithms                    (No default value)
+zstd-compression-level                    3
