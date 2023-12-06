@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, Table } from "react-bootstrap";
 
-export const Pago = ({}) => {
+export const Pago = ({data}) => {
+
+    
+  const [sendData, setSendData] = useState({});
     useEffect(() => {
-        // Código de efecto si es necesario
+        console.log(data);
     }, []);
 
     return (
@@ -19,19 +22,19 @@ export const Pago = ({}) => {
                             </tr>
                             <tr>
                                 <td style={{ textAlign: "left"}}>Fecha</td>
-                                <td style={{ textAlign: "left", width: "20px"}}>Fecha</td>
+                                <td style={{ textAlign: "left", width: "20px"}}>{data.fecha + " " + data.hora}</td>
                             </tr>
                             <tr>
                                 <td style={{ textAlign: "left"}}>Código de reserva</td>
-                                <td style={{ textAlign: "left", width: "20px"}}>Código de reserva</td>
+                                <td style={{ textAlign: "left", width: "20px"}}>{data.id_horario}</td>
                             </tr>
                             <tr>
                                 <td style={{ textAlign: "left"}}>Prestaciones</td>
-                                <td style={{ textAlign: "left", width: "20px"}}>Prestaciones</td>
+                                <td style={{ textAlign: "left", width: "20px"}}>{data.nombre_prestacion}</td>
                             </tr>
                             <tr>
                                 <td style={{ textAlign: "left"}}>Profesional</td>
-                                <td style={{ textAlign: "left", width: "20px"}}>Profesional</td>
+                                <td style={{ textAlign: "left", width: "20px"}}>{data.nombre_profesional}</td>
                             </tr>
                             <tr>
                                 <td style={{ textAlign: "left"}}>Indicación(es)</td>

@@ -62,8 +62,9 @@ export const Horario = ({data , onDataFromPage}) => {
             nombre_prestacion: data.nombre_prestacion,
             id_profesional: data.id_profesional,
             nombre_profesional: data.nombre_profesional,
-            fecha: selectedDate,
-            hora: selectedTime
+            id_horario: "1",
+            fecha: selectedDate.toDate().toISOString().slice(0,10),
+            hora: time
         }
         setSendData(nuevoDato);
         onDataFromPage(nuevoDato); 

@@ -32,7 +32,7 @@ export const Inicio = () => {
       case 3:
         return <Paciente data={dataFromPage} onDataFromPage={passData}></Paciente>
       case 4:
-        return <Pago></Pago>
+        return <Pago data= {dataFromPage} ></Pago>
       case 5:
         return <div>Detalle</div>
     }
