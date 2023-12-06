@@ -8,8 +8,8 @@ export const Pago = ({}) => {
 
     return (
         <div className="row mb-4">
-            <div className="col-12" style={{ }}>Informacion de la cita</div>
-            <Card style={{ width: "60%", height:"auto", maxHeight: "500px", margin: "auto"}}>
+            <div className="col-12" style={{ fontSize:"xx-large", fontWeight:"bold", color:"white"}}>Informacion de la cita</div>
+            <Card style={{ width: "60%", height:"auto", margin: "auto"}}>
                 <Card.Body>
                     <Table>
                         <tbody>

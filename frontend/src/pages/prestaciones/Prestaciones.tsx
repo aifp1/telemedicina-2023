@@ -15,12 +15,19 @@ export const Prestaciones = ({ onDataFromPage }) => {
     // let senData: any = {};
 
     useEffect(() => {
-      getCategorias.then(function(response){
-        setCategorias(response.data);
-      });
-      getPrestaciones.then(function(response){
-        setPrestaciones(response.data);
-      })
+        getCategorias.then(function(response){
+            setCategorias(response.data);
+        });
+        getPrestaciones.then(function(response){
+            setPrestaciones(response.data);
+        });
+
+        const nuevoDato = {
+            state:false
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato);  
+
     }, []);
   
     function cargarCategorias() {
@@ -51,8 +58,9 @@ export const Prestaciones = ({ onDataFromPage }) => {
     }
     function cambiarDropdownPrestaciones(event){
         setPrestacion(event.target.textContent);
-        //console.log("Send DAta: ", sendData);
+        //console.log("Send DAta: ", event.target.id);
         const nuevoDato = {
+            state:true,
             id_prestacion: event.target.id,
             nombre_prestacion: event.target.textContent,
         }
