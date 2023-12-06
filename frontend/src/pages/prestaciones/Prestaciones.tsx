@@ -39,8 +39,10 @@ export const Prestaciones = ({ onDataFromPage }) => {
     }
     function cargarPrestaciones(id_categoria: number) {
         const items = [];
-        prestaciones[id_categoria].data.map(prestacion => {
-            items.push(<li><a className='dropdown-item' key={prestacion.id_prestacion} id={prestacion.id_prestacion}>{prestacion.nombre_prestacion}</a></li>)
+        prestaciones.map(prestacion => {
+            if(prestacion.id_categoria == id_categoria){
+                items.push(<li><a className='dropdown-item' key={prestacion.id_prestacion} id={prestacion.id_prestacion}>{prestacion.nombre_prestacion}</a></li>)
+            }
         })
         setElementosLi(items);
     }    
