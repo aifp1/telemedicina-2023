@@ -9,8 +9,12 @@ export const Profesional = ({ data , onDataFromPage}) => {
     //console.log("Data ya en profesional: ", data);
 
     useEffect(() => {
-
         console.log(data.id_prestacion);
+        const nuevoDato = {
+            state: false
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato); 
         getPrestacionMedico({id_prestacion: data.id_prestacion}).then(async function(response){
             console.log("Response: ", response);
             let lista_profesionales: any[] = [];

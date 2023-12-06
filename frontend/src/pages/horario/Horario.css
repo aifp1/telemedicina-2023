@@ -1,3 +1,19 @@
-
+.button_horas {
+    background-color: #1c65b1;
+    color: #ffffff;
+    padding: 10px 20px; /* Ajusta el relleno según tus necesidades */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Agrega una transición suave al color de fondo */
   
+    /* Estilos adicionales para el estado hover */
+    &:hover {
+      background-color: #144578;
+    }
   
+    /* Estilos adicionales para el estado activo (cuando se hace clic) */
+    &:active {
+      background-color: red !important ;
+    }
+  }

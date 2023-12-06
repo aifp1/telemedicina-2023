@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { Prestaciones } from '../prestaciones/Prestaciones';
 import { Profesional } from '../profesional/Profesional';
 import { Horario } from '../horario/Horario';
+import { Pago } from '../pago/Pago';
 import { NavbarCustom } from '../../components/navbarCustom/NavbarCustom';
 import { FooterCustom } from '../../components/footerCustom/FooterCustom';
 import { Link } from 'react-router-dom';
 import './Inicio.css';
+import { cleanDigitSectionValue } from '@mui/x-date-pickers/internals/hooks/useField/useField.utils';
 
 export const Inicio = () => {
     const [pagina, setPagina] = useState(0);
@@ -21,15 +23,16 @@ export const Inicio = () => {
     console.log("Pagina: ", pagina);
     switch(pagina){
       case 0: 
+        console.log(dataFromPage);
         return <Prestaciones onDataFromPage={passData} ></Prestaciones>
       case 1:
         return <Profesional data={dataFromPage} onDataFromPage={passData}></Profesional>
       case 2:
-        return <Horario data={dataFromPage}></Horario>
+        return <Horario data={dataFromPage} onDataFromPage={passData}></Horario>
       case 3:
         return <div>Paciente</div>
       case 4:
-        return <div>Pago</div>
+        return <Pago></Pago>
       case 5:
         return <div>Detalle</div>
     }
@@ -54,7 +57,7 @@ export const Inicio = () => {
             </div>
             <div className="col-12">
               <button type='button' className='btn btn-danger mx-4' onClick={paginaAtras}>Atras</button>
-              <button type='button' className='btn btn-success mx-4' onClick={paginaSiguiente}>Siguiente</button>
+              <button type='button' className='btn btn-success mx-4' onClick={paginaSiguiente} disabled={dataFromPage != undefined? false : true}>Siguiente</button>
             </div>
             <div className="col-12 mt-5">
               <Link to='/login' className='link'>Iniciar sesion administrador</Link>              
