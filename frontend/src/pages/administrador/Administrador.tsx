@@ -53,7 +53,7 @@ export const Administrador = () => {
 
         <Toolbar />
         <List>
-          {['Categorias', 'Prestaciones', 'Profesional', 'Tomar Hora', 'Agregar Administrador'].map((text, index) => (
+          {['Categorias', 'Prestaciones', 'Profesional', 'Horario'].map((text, index) => (
             <Link to={`/auth/dashboard/admin/${text}`} key={text} style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItem button>
                 <ListItemText>

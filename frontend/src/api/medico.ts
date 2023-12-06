@@ -4,4 +4,5 @@ import axios from './axios';
 export const getMedicos = axios.get(`/medico/getMedicos`);
 export const getMedico = (id: number) => axios.get(`/medico/getMedico/${id}`);
 export const addMedico = (user: any) => axios.post(`/medico/getMedicos`, user);
+export const deleteMedico =  (id: number) => axios.delete(`/medico/deleteMedico/${id}`);
 

@@ -15,31 +15,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import { Divider, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
-import { deletePrestacion, getPrestaciones } from "../../api/prestaciones";
+import { deleteMedico,getMedicos } from "../../api/medico";
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const Prestacionesadmin = () => {
+export const Medicosadmin = () => {
 
-    const [prestaciones, setPrestaciones] = useState([]);
+    const [medicos, setMedicos] = useState([]);
 
     useEffect(() => {
-      getPrestaciones.then(function(response){
-        setPrestaciones(response.data);
+      getMedicos.then(function(response){
+        setMedicos(response.data);
     })
     }, []);
 
-const handleDelete = (id_prestacion: number) => {
-  deletePrestacion(id_prestacion)
-  window.location.href = "/auth/dashboard/admin/Prestaciones";
-}
-useEffect(() => {
-  getPrestaciones.then(function(response){
-    setPrestaciones(response.data);
-})
-}, [prestaciones]);
-
+    const handleDelete = (id: any) => {
+        deleteMedico(id)
+    
+    }
+  
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -136,19 +131,22 @@ useEffect(() => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nombre prestacion</TableCell>
-                  <TableCell>ID categoria</TableCell>
+                <TableCell>ID</TableCell>
+                  <TableCell>Nombre</TableCell>
+                  <TableCell>Apellidos</TableCell>
+                  <TableCell>Lugar de atencion</TableCell>
+                
                 </TableRow>
               </TableHead>
               <TableBody>
-                  {prestaciones.map((prestacion) => (
-                      <TableRow key={prestacion.id_prestacion}>
-                      <TableCell>{prestacion.id_prestacion}</TableCell>
-                      <TableCell>{prestacion.nombre_prestacion}</TableCell>
-                      <TableCell>{prestacion.id_categoria}</TableCell>
+                  {medicos.map((medico) => (
+                      <TableRow key={medico.id_medico}>
+                    <TableCell>{medico.id_medico}</TableCell>
+                      <TableCell>{medico.nombres}</TableCell>
+                      <TableCell>{medico.apellidos}</TableCell>
+                      <TableCell>{medico.lugar_atencion}</TableCell>
                       <TableCell>
-                      <Button variant="contained" color="error" onClick={() => handleDelete(prestacion.id_prestacion)}>
+                      <Button variant="contained" color="error" onClick={() => handleDelete(medico.id_medico)}>
                       Eliminar
                       </Button>
                       </TableCell>
@@ -158,7 +156,7 @@ useEffect(() => {
             </Table>
             
           </Box>
-          <Button variant="contained" color="success" onClick={() => handleInsert(prestacion.id_prestacion)}>
+          <Button variant="contained" color="success" onClick={() => handleInsert(medico.id_categoria)}>
                           Agregar
                           </Button>
         </Box>

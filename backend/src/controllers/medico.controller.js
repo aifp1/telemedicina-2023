@@ -49,7 +49,7 @@ async function addMedico(request, response){
 async function deleteMedico(request, response){
     try {
         const { id_medico } = request.body;
-        const delete_medico = await pool.query('delete from medico where id_medico = ?', id_medico);
+        const delete_medico = await pool.query('delete from medico where id_medico = ?', request.params.id);
         console.log("Delete medico: ", delete_medico);
         return response.json(delete_medico);
     } catch (error) {

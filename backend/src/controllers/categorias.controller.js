@@ -39,7 +39,7 @@ async function addCategoria(request, response){
 async function deleteCategoria(request, response){
     try {
         const { id_categoria } = request.body;
-        const deleteCategoria = await pool.query('delete from categorias where id_categoria = ?', id_categoria);
+        const deleteCategoria = await pool.query('delete from categorias where id_categoria = ?', request.params.id);
         console.log("Delete Categoria: ", deleteCategoria);
         return response.json(deleteCategoria);
     } catch (error) {

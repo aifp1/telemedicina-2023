@@ -32,7 +32,10 @@ export const Categoriasadmin = () => {
       });
       
     }, []);
-    
+    const handleDelete = (id:any) => {
+      deleteCategoria(id)
+    }
+
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -64,7 +67,7 @@ export const Categoriasadmin = () => {
 
         <Toolbar />
         <List>
-          {['Categorias', 'Prestaciones', 'Profesional', 'Tomar Hora', 'Agregar Administrador'].map((text, index) => (
+          {['Categorias', 'Prestaciones', 'Profesional', 'Horario'].map((text, index) => (
             <Link to={`/auth/dashboard/admin/${text}`} key={text} style={{ textDecoration: 'none', color: 'inherit' }}>
               <ListItem button>
                 <ListItemText>
@@ -144,12 +147,12 @@ export const Categoriasadmin = () => {
                     <TableCell>{categoria.nombre_categoria}</TableCell>
                     <TableCell>
                     <Button variant="contained" color="error" onClick={() => handleDelete(categoria.id_categoria)}>
-                    Delete
+                    Eliminar
                     </Button>
                     </TableCell>
                     <TableCell>
                         <Button variant="contained" color="primary" onClick={() => handleEdit(categoria.id_categoria)}>
-                        Edit
+                        Editar
                         </Button>
                     </TableCell>
                     </TableRow>
@@ -157,6 +160,9 @@ export const Categoriasadmin = () => {
                 </TableBody>
           </Table>
         </Box>
+        <Button variant="contained" color="success" onClick={() => handleInsert(prestacion.id_categoria)}>
+                          Agregar
+                          </Button>
       </Box>
     </Box>
     

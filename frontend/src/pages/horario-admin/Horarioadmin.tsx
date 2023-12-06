@@ -15,31 +15,21 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import { Divider, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
-import { deletePrestacion, getPrestaciones } from "../../api/prestaciones";
+import { getHorarios } from "../../api/horario";
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const Prestacionesadmin = () => {
+export const Horarioadmin = () => {
 
-    const [prestaciones, setPrestaciones] = useState([]);
+    const [horarios, setHorarios] = useState([]);
 
     useEffect(() => {
-      getPrestaciones.then(function(response){
-        setPrestaciones(response.data);
+      getHorarios.then(function(response){
+        setHorarios(response.data);
     })
     }, []);
-
-const handleDelete = (id_prestacion: number) => {
-  deletePrestacion(id_prestacion)
-  window.location.href = "/auth/dashboard/admin/Prestaciones";
-}
-useEffect(() => {
-  getPrestaciones.then(function(response){
-    setPrestaciones(response.data);
-})
-}, [prestaciones]);
-
+  
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -136,21 +126,31 @@ useEffect(() => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell>ID</TableCell>
-                  <TableCell>Nombre prestacion</TableCell>
-                  <TableCell>ID categoria</TableCell>
+                  <TableCell>fecha</TableCell>
+                  <TableCell>Hora inicio</TableCell>
+                  <TableCell>Hora termino</TableCell>
+                  <TableCell>duracion</TableCell>
+                  <TableCell>estado</TableCell>
+                
                 </TableRow>
               </TableHead>
               <TableBody>
-                  {prestaciones.map((prestacion) => (
-                      <TableRow key={prestacion.id_prestacion}>
-                      <TableCell>{prestacion.id_prestacion}</TableCell>
-                      <TableCell>{prestacion.nombre_prestacion}</TableCell>
-                      <TableCell>{prestacion.id_categoria}</TableCell>
+                  {horarios.map((horario) => (
+                      <TableRow key={horario.id_horario}>
+                      <TableCell>{horario.fecha}</TableCell>
+                      <TableCell>{horario.hora_ini}</TableCell>
+                      <TableCell>{horario.hora_fin}</TableCell>
+                      <TableCell>{horario.duracion}</TableCell>
+                      <TableCell>{horario.estado}</TableCell>
                       <TableCell>
-                      <Button variant="contained" color="error" onClick={() => handleDelete(prestacion.id_prestacion)}>
+                      <Button variant="contained" color="error" onClick={() => handleDelete(horario.id_categoria)}>
                       Eliminar
                       </Button>
+                      </TableCell>
+                      <TableCell>
+                          <Button variant="contained" color="primary" onClick={() => handleEdit(horario.id_categoria)}>
+                          Editar
+                          </Button>
                       </TableCell>
                       </TableRow>
                   ))}
@@ -158,7 +158,7 @@ useEffect(() => {
             </Table>
             
           </Box>
-          <Button variant="contained" color="success" onClick={() => handleInsert(prestacion.id_prestacion)}>
+          <Button variant="contained" color="success" onClick={() => handleInsert(horario.id_categoria)}>
                           Agregar
                           </Button>
         </Box>
