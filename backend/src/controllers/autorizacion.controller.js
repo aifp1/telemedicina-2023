@@ -6,11 +6,20 @@ const { createAccessToken } = require('../libs/jwt');
 async function registerAdmin(request, response){
     try {
         const { email, password } = request;
-        const userFound = await pool.query('select * from autorizacion where email_autorizacion = ?', email);
-        console.log("userFound: ", userFound);
-        if(userFound[0] != '') return {status: 400};
+        let newAdmin;
+        // const userFound = await pool.query('select * from autorizacion where email_autorizacion = ?', email);
+        // console.log("userFound: ", userFound);
+        // if(userFound[0] != '') return {status: 400};
         const passwordHash = bcrypt.hashSync(password, 10);
-        const newAdmin = await pool.query('insert into autorizacion (email_autorizacion, password_autorizacion) values (?,?)', [email, passwordHash]);
+        console.log("Antes: ", request);
+        console.log("Requestssssssss: ", request.id_administrador);
+        if(request.id_administrador){
+            newAdmin = await pool.query('insert into autorizacion (email_autorizacion, password_autorizacion, id_administrador) values (?,?,?)', [email, passwordHash, request.id_administrador]);
+        }
+        if(request.id_medico){
+            newAdmin = await pool.query('insert into autorizacion (email_autorizacion, password_autorizacion, id_medico) values (?,?,?)', [email, passwordHash, request.id_medico]);            
+        }
+        if((request.id_administrador === undefined) && (request.id_medico === undefined)) return response.status(400).json(['No hay personal asignado']);
         console.log("asdasdasdaaadabbbb: ", newAdmin);
         console.log("aaaaa: ", newAdmin[0].insertId);
         return {status: 200, id: newAdmin[0].insertId};

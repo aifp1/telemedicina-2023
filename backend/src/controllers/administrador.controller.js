@@ -26,13 +26,16 @@ async function getAdmin(request, response){
 async function addAdmin(request, response){
     try {
         const { email, password, nombres, apellidos } = request.body
-        const register = await registerAdmin({email,password});
-        if(register.status != 200) return response.status(400).json(["The email is already use"]);
-        const newAdmin = await pool.query('insert into administrador (nombres, apellidos, id_autorizacion) values (?, ?, ?)', [nombres, apellidos, register.id]);
+        const userFound = await pool.query('select * from autorizacion where email_autorizacion = ?', email);
+        if(userFound[0] === null) return response.status(400).json(['Email is not valid']);
+        const newAdmin = await pool.query('insert into administrador (nombres, apellidos) values (?, ?)', [nombres, apellidos]);
+        const register = await registerAdmin({email,password, id_administrador: newAdmin[0].insertId});
+        if(register.status != 200) return response.status(400).json(["The email is already use"]);        
         return response.json({
             status: 200,
             message: "Administrador creado",
             id: newAdmin[0].insertId,
+            register: register.id,
             nombres,
             apellidos,
             email,

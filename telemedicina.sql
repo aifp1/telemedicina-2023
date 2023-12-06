@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.2.0, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: localhost    Database: telemedicina
 -- ------------------------------------------------------
--- Server version	8.2.0
+-- Server version	8.0.32
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,11 +26,8 @@ CREATE TABLE `administrador` (
   `id_administrador` int NOT NULL AUTO_INCREMENT,
   `nombres` varchar(100) NOT NULL,
   `apellidos` varchar(52) NOT NULL,
-  `id_autorizacion` int NOT NULL,
-  PRIMARY KEY (`id_administrador`),
-  KEY `id_autorizacion` (`id_autorizacion`),
-  CONSTRAINT `administrador_ibfk_1` FOREIGN KEY (`id_autorizacion`) REFERENCES `autorizacion` (`id_autorizacion`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`id_administrador`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +36,7 @@ CREATE TABLE `administrador` (
 
 LOCK TABLES `administrador` WRITE;
 /*!40000 ALTER TABLE `administrador` DISABLE KEYS */;
-INSERT INTO `administrador` VALUES (1,'test admin','8',8),(2,'test admin','9',9),(3,'test admin','10',10);
+INSERT INTO `administrador` VALUES (1,'Test','Admin 1');
 /*!40000 ALTER TABLE `administrador` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,8 +51,14 @@ CREATE TABLE `autorizacion` (
   `id_autorizacion` int NOT NULL AUTO_INCREMENT,
   `email_autorizacion` varchar(100) NOT NULL,
   `password_autorizacion` varchar(100) NOT NULL,
-  PRIMARY KEY (`id_autorizacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id_medico` int DEFAULT NULL,
+  `id_administrador` int DEFAULT NULL,
+  PRIMARY KEY (`id_autorizacion`),
+  KEY `id_medico` (`id_medico`),
+  KEY `id_administrador` (`id_administrador`),
+  CONSTRAINT `autorizacion_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `autorizacion_ibfk_2` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +67,7 @@ CREATE TABLE `autorizacion` (
 
 LOCK TABLES `autorizacion` WRITE;
 /*!40000 ALTER TABLE `autorizacion` DISABLE KEYS */;
-INSERT INTO `autorizacion` VALUES (1,'test1@admin.cl','123456'),(2,'test2@admin.cl','$2b$10$X/afL2YtP6fuqA1GWeXzcuJxgcxMSfjUcrnla/zTCAwsESaniqhOe'),(3,'test3@admin.cl','$2b$10$.eKrVEfBYvWLvJ.fRwDRAOhGgU74MCcjZKVn62kDXlbs65g7C.bCm'),(4,'test4@admin.cl','$2b$10$FMAE2VG1RQa0kPHklmtRt.52Sno.vdUC4RqEzZKkEHkswgfuoxar.'),(5,'test5@admin.cl','$2b$10$O/AeGa4APEURSzoDWyNIAuMwqbeBdne7yrJn0cRsQYKv10j6vwgu2'),(6,'test6@admin.cl','$2b$10$Yvv2oW1zukGvBAcQw1u1hO7ie5FKIZsDXV5uJ.U4IsVNW1EKOCKhe'),(7,'test7@admin.cl','$2b$10$gRm74LOksxVYcaxn8ain5u2TEAEYVWNtCh9Yd9F7UN3og6Jx83x9m'),(8,'test8@admin.cl','$2b$10$ma22dxNeE.kcxxVB9NP3V.Dtg.weNxEMIUGgA3tHSWtkH/nZfpFtO'),(9,'test9@admin.cl','$2b$10$dpdX5M8275UZ/YDbnb99luY52Gbm0u.gb31nQ2h/jMiV3ImVpfcb.'),(10,'test10@admin.cl','$2b$10$jHYVHLbZU8WsavXtZ.89PuL4DPLMwymS114/KiyZPAFQB1caSWvu6'),(12,'test1@medico.cl','$2b$10$FLMykOorQF9tCj0FEnov2uK3eGz0j5FQgMwrbHAIEJLKpoJn9S9NK'),(13,'test2@medico.cl','$2b$10$6d4wDYF.fmnrUklo8XnA/.wW141z9F4Ao.b5/sDgLkI1.kOS.gDqq'),(14,'test3@medico.cl','$2b$10$v5Iss4FM5dVjVS5rw7P3o.HeH3e1PHJkwTZCpqjzay5KdS.8Bgnv2'),(15,'test4@medico.cl','$2b$10$YMjU.dd7ssTw9UPtOzEb3.1FOuzU28SKCKECq0OFfyzsax5HZdnmG'),(16,'test5@medico.cl','$2b$10$WKLEYk9AfMael/uiuKhhVuIR4Z9qDFUP22Bb4R6QBIacxaa4PC1EG'),(17,'test6@medico.cl','$2b$10$TVYtj3ySYEcAcHQloMEqk.Eqvgo1A.oskWyCqQxHOMOaPyJmMJw5i');
+INSERT INTO `autorizacion` VALUES (1,'test1@admin.cl','$2b$10$teuNuUFlvzRvR/wdbrgXruOqsbk66GwUSLiRzs4oYLOxy5TvqldOm',NULL,1),(2,'amparo@medico.cl','$2b$10$azFHPVV8M00hVoUaLU1PKeIsm/EiZPvXAIk//8ECpHyzS11m67upi',1,NULL),(3,'barbara@medico.cl','$2b$10$gNS./4GFUXZH75RZ8T9dZ.h5X8A5Jlv5J97xwaoOMvTnR/oQzpOxu',2,NULL),(4,'beda@medico.cl','$2b$10$O8IBxNEoLiVfkACCvWNCMeeNF88Yc2XMV1Xtrb0GXWBn521.ll2ii',3,NULL),(5,'camila@medico.cl','$2b$10$AsRpa/CRqi2AKZHLpzR32.YoxnuIodAYwJ2hKS.VHcOqGb2svhydS',4,NULL),(6,'carlos@medico.cl','$2b$10$/mD3dUp22FPU5vwu/Cyg5OIitg4ly7Bh9XqOPGX3Wo2RFeqZ.c5vu',5,NULL),(7,'constanza@medico.cl','$2b$10$5/F.i0nRimg5ssb9TRrdMehCd7ieV3uo2ItbA4IbsKsxf2y69rLFm',6,NULL),(8,'daniel@medico.cl','$2b$10$yxxejzgb6LLA1kKCAED0petqgVb0tTQES3Q4ThzmRTJWI6TFNcVhi',7,NULL);
 /*!40000 ALTER TABLE `autorizacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -77,9 +80,9 @@ DROP TABLE IF EXISTS `categorias`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `categorias` (
   `id_categoria` int NOT NULL AUTO_INCREMENT,
-  `nombre_categoria` varchar(30) NOT NULL,
+  `nombre_categoria` varchar(255) NOT NULL,
   PRIMARY KEY (`id_categoria`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -88,7 +91,7 @@ CREATE TABLE `categorias` (
 
 LOCK TABLES `categorias` WRITE;
 /*!40000 ALTER TABLE `categorias` DISABLE KEYS */;
-INSERT INTO `categorias` VALUES (1,'receta de lentes'),(2,'audifonos clinicos');
+INSERT INTO `categorias` VALUES (1,'Receta de Lentes'),(2,'Audifonos Clinicos'),(3,'Salud Integral Audiologica'),(4,'Medicina General y Salud Mental'),(5,'Psicologia'),(6,'Nutricion y Dietetica'),(7,'Terapias Complementarias y Masajes'),(8,'Medicina Tradicional China'),(9,'Matroneria y Salud Sexual');
 /*!40000 ALTER TABLE `categorias` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +113,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`id_horario`),
   KEY `id_medico` (`id_medico`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,7 +122,6 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
-INSERT INTO `horario` VALUES (1,'2023-12-01','12:00:00',30,'12:30:00','Disponible',1),(2,'2023-12-01','12:30:00',30,'13:00:00','Disponible',1),(3,'2023-12-01','13:00:00',30,'13:30:00','Disponible',1),(4,'2023-12-05','12:00:00',30,'12:30:00','Disponible',1),(5,'2023-12-05','12:30:00',30,'13:00:00','Disponible',1),(6,'2023-12-05','13:00:00',30,'13:30:00','Disponible',1);
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,17 +165,11 @@ CREATE TABLE `medico` (
   `nombres` varchar(100) NOT NULL,
   `apellidos` varchar(52) NOT NULL,
   `lugar_atencion` varchar(255) NOT NULL,
-  `id_prestacion` int NOT NULL,
-  `id_autorizacion` int NOT NULL,
   `id_administrador` int NOT NULL,
   PRIMARY KEY (`id_medico`),
-  KEY `id_prestacion` (`id_prestacion`),
-  KEY `id_autorizacion` (`id_autorizacion`),
   KEY `id_administrador` (`id_administrador`),
-  CONSTRAINT `medico_ibfk_1` FOREIGN KEY (`id_prestacion`) REFERENCES `prestaciones` (`id_prestacion`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `medico_ibfk_2` FOREIGN KEY (`id_autorizacion`) REFERENCES `autorizacion` (`id_autorizacion`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `medico_ibfk_3` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,7 +178,7 @@ CREATE TABLE `medico` (
 
 LOCK TABLES `medico` WRITE;
 /*!40000 ALTER TABLE `medico` DISABLE KEYS */;
-INSERT INTO `medico` VALUES (1,'Barbara','Perez Dejeas','Condell 1490, 2340000 Valparaiso',1,12,3),(2,'konstanza','Gonzalez Barrera','Condell 1490, 2340000 Valparaiso',1,13,3),(3,'Darly','Ortiz Gutierrez','Condell 1490, 2340000 Valparaiso',1,14,3),(4,'Darla','Brunett Ibanez','Condell 1490, 2340000 Valparaiso',1,15,3),(5,'Romina','Lecaros Hernandez','Valparaiso',2,16,3),(6,'Jorge Luis Eduardo','Collao Nunez','Valparaiso',2,17,3);
+INSERT INTO `medico` VALUES (1,'Amparo','Morales Sotomayor','calle Errazuriz 1042',1),(2,'Barbara','Perez Dejeas','Condell 1490',1),(3,'Beda','Carpio Mordones','Condell 1490',1),(4,'Camila','Lizama Rivera','Condell 1490',1),(5,'Carlos','Cuadros Gutierrez','Condell 1490',1),(6,'Constanza','Roman Nuñez','Condell 1490',1),(7,'Daniel Andres','Vicencio Godoy','Condell 1490',1);
 /*!40000 ALTER TABLE `medico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +225,7 @@ CREATE TABLE `prestaciones` (
   PRIMARY KEY (`id_prestacion`),
   KEY `id_categoria` (`id_categoria`),
   CONSTRAINT `prestaciones_ibfk_1` FOREIGN KEY (`id_categoria`) REFERENCES `categorias` (`id_categoria`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,8 +234,36 @@ CREATE TABLE `prestaciones` (
 
 LOCK TABLES `prestaciones` WRITE;
 /*!40000 ALTER TABLE `prestaciones` DISABLE KEYS */;
-INSERT INTO `prestaciones` VALUES (1,'tecn├│logo/a oftam├│logo/a (receta de lentes Plan Condell 1490)',1),(2,'control de aud├¡fonos',2),(3,'prueba de aud├¡fonos (Gratis)',2);
+INSERT INTO `prestaciones` VALUES (1,'Tecnologo/a oftamologo/a',1),(2,'Toma de moldes Audifonos Clinicos',2),(3,'Prueba de audifonos (Gratis)',2),(4,'Entrega de audifonos',2),(5,'Control de audifonos',2),(6,'Revision de audifono clinico',2),(7,'Calibracion Particular Starkey',2),(8,'Control Calibracion Convenio Starkey',2),(9,'Toma de Moldes Protectores Auditivos',2),(10,'Entrega de molde',2),(11,'Maniobras de reposicion vestibular',3),(12,'Examen audiometria adulto',3),(13,'Examen impedanciometria',3),(14,'Examen audiometria + impedanciometria (Adulto)',3),(15,'Examen emisiones otoacusticas',3),(16,'Examen impedanciometria + funcion tubaria',3),(17,'Otorrinolaringologia (Con Receta de Audifonos)',3),(18,'Rehabilitacion vestibular',3),(19,'Examen audiometria niños (3 a 15 años)',3),(20,'Limpieza de cada oido adulto',3),(21,'Medicina General con Enfoque en Oido, Nariz y Garganta (Sin Receta Audifonos)',3),(22,'Funcion Tubaria',3),(23,'Pre-Consulta Audiologica',3),(24,'Prueba Calorica Bitermal o Minima',3),(25,'Examen Funcional VIII Par c/VNG',3),(26,'Limpieza de cada oido de niños (De 3 a 15 años)',3),(27,'VIII Par Acortado (sin pureba calorica)',3),(28,'Examen Funcional VIII Par con agua',3),(29,'vHIT (VIDEO HEAD IMPULSE TEST)',3),(30,'Promocion audiometria',3),(31,'AUDIOMETRIA PREVENTIVA',3),(32,'Promocion Audiometria Adultos 2x1',3),(33,'Consulta medicina general Adulto',4),(34,'Consulta medicina general integral enfoque salud mental Adulto',4),(35,'Medicina cannabica',4),(36,'Teleconsulta medicina general Adulto',4),(37,'Teleconsulta medicina general integral enfoque salud mental',4),(38,'Teleconsulta medicina general integral enfoque infanto-juvenil',4),(39,'Consulta medicina general integral enfoque infanto-juvenil',4),(40,'Informe Salud Mental',4),(41,'Consulta psicoterapia individual',5),(42,'Teleconsulta psicoterapia individual',5),(43,'Teleconsulta psicoterapia de parejas',5),(44,'Psicoterapia Infanto Juvenil (5 a 17 años)',5),(45,'Psicoterapia Infanto Juvenil (8 a 17 años)',5),(46,'Teleconsulta Psicoterapia Infanto Juvenil (8 a 17 años)',5),(47,'Teleconsulta Psicoterapia Infanto Juvenil (5 a 17 años)',5),(48,'Control nutricion y dietetica',6),(49,'Servicio de bioimpedancia',6),(50,'Teleconsulta nutricion y dietetica',6),(51,'Teleconsulta nutricion y dietetica (controles precio ant)',6),(52,'Consulta nutricion y dietetica (controles precio ant)',6),(53,'Operativo nutricional',6),(54,'Bioimpedancia Scarlett',6),(55,'Primera Sesion Nutricion y Dietetica',6),(56,'Sesion de quiromasaje',7),(57,'Sesion de masaje sueco',7),(58,'Sesion de reflexion podal',7),(59,'Sesion de ventosas o cupping',7),(60,'Sesion terapia de percusion',7),(61,'Electroterapia con TENS',7),(62,'Masaje abreviado en silla ergonomica o camilla',7),(63,'Masaje Localizado',7),(64,'Masaje para Embarazadas',7),(65,'Masaje Promocion por Semana',7),(66,'PAGO PENDIENTE MODIFICABLE',7),(67,'Masaje Laboral C° Ohiggins',7),(68,'Masaje Laboral Corporacion Municipal',7),(69,'Recovery Deportivo /Masaje Pre Deportivo',7),(70,'Recovery Deportivo /Masaje Post Deportivo',7),(71,'Medicina Tradicional China',8),(72,'Teleconsulta salud sexual',9);
 /*!40000 ALTER TABLE `prestaciones` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `prestaciones_medico`
+--
+
+DROP TABLE IF EXISTS `prestaciones_medico`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `prestaciones_medico` (
+  `id_prestaciones_medico` int NOT NULL AUTO_INCREMENT,
+  `id_prestacion` int NOT NULL,
+  `id_medico` int NOT NULL,
+  PRIMARY KEY (`id_prestaciones_medico`),
+  KEY `id_prestacion` (`id_prestacion`),
+  KEY `id_medico` (`id_medico`),
+  CONSTRAINT `prestaciones_medico_ibfk_1` FOREIGN KEY (`id_prestacion`) REFERENCES `prestaciones` (`id_prestacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `prestaciones_medico_ibfk_2` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `prestaciones_medico`
+--
+
+LOCK TABLES `prestaciones_medico` WRITE;
+/*!40000 ALTER TABLE `prestaciones_medico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `prestaciones_medico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -251,4 +275,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05  9:22:43
+-- Dump completed on 2023-12-05 21:38:20

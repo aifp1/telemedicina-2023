@@ -27,7 +27,7 @@ async function addCategoria(request, response){
         console.log("Result: ", newCategoria);
         return response.json({
             status: 200,
-            message: "Administrador creado",
+            message: "Categoria creada",
             id: newCategoria[0].insertId,
             nombre_categoria,
         });
