@@ -4,7 +4,7 @@ const { registerAdmin } = require('./autorizacion.controller');
 async function getMedicos(request, response){
     try {
         const [result] = await pool.query('select * from medico');
-        console.log("Result medico: ", result);
+        //console.log("Result medico: ", result);
         return response.status(200).json(result);
     } catch (error) {
         console.log("Error: ", error);        

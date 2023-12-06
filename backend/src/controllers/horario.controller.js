@@ -3,7 +3,7 @@ const { pool } = require("../../db");
 async function getHorarios(request, response){
     try {
         const [result] = await pool.query('select * from horario');
-        console.log("Result categorias: ", result);
+        //console.log("Result categorias: ", result);
         return response.status(200).json(result);
     } catch (error) {
         console.log("Error: ", error);

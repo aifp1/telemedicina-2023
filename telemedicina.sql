@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.2.0, for Win64 (x86_64)
 --
 -- Host: localhost    Database: telemedicina
 -- ------------------------------------------------------
--- Server version	8.0.32
+-- Server version	8.2.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -113,7 +113,7 @@ CREATE TABLE `horario` (
   PRIMARY KEY (`id_horario`),
   KEY `id_medico` (`id_medico`),
   CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,6 +122,7 @@ CREATE TABLE `horario` (
 
 LOCK TABLES `horario` WRITE;
 /*!40000 ALTER TABLE `horario` DISABLE KEYS */;
+INSERT INTO `horario` VALUES (1,'2023-12-01','12:00:00',30,'12:30:00','Disponible',1),(2,'2023-12-01','12:30:00',30,'13:00:00','Disponible',1),(3,'2023-12-01','13:00:00',30,'13:30:00','Disponible',1),(4,'2023-12-05','12:00:00',30,'12:30:00','Disponible',1),(5,'2023-12-05','12:30:00',30,'13:00:00','Disponible',1),(6,'2023-12-05','13:00:00',30,'13:30:00','Disponible',1),(7,'2023-12-02','14:00:00',30,'14:30:00','Disponible',1),(8,'2023-12-02','14:30:00',30,'15:00:00','Disponible',1),(9,'2023-12-02','15:00:00',30,'15:30:00','Disponible',1),(10,'2023-12-03','11:00:00',30,'11:30:00','Disponible',1),(11,'2023-12-03','11:30:00',30,'12:00:00','Disponible',1),(12,'2023-12-03','12:00:00',30,'12:30:00','Disponible',1),(13,'2023-12-04','09:00:00',30,'09:30:00','Disponible',1),(14,'2023-12-04','09:30:00',30,'10:00:00','Disponible',1),(15,'2023-12-04','10:00:00',30,'10:30:00','Disponible',1),(16,'2023-12-06','15:00:00',30,'15:30:00','Disponible',1),(17,'2023-12-06','15:30:00',30,'16:00:00','Disponible',1),(18,'2023-12-06','16:00:00',30,'16:30:00','Disponible',1),(19,'2023-12-07','13:00:00',30,'13:30:00','Disponible',1),(20,'2023-12-07','13:30:00',30,'14:00:00','Disponible',1);
 /*!40000 ALTER TABLE `horario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,4 +277,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-06  0:26:30
+-- Dump completed on 2023-12-06  3:11:39

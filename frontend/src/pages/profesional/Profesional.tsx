@@ -9,24 +9,26 @@ export const Profesional = ({ data , onDataFromPage}) => {
     //console.log("Data ya en profesional: ", data);
 
     useEffect(() => {
-        console.log(data.id_prestacion);
-        const nuevoDato = {
-            state: false
-        }
-        setSendData(nuevoDato);
-        onDataFromPage(nuevoDato); 
         getPrestacionMedico({id_prestacion: data.id_prestacion}).then(async function(response){
-            console.log("Response: ", response);
+            //console.log("Response: ", response);
             let lista_profesionales: any[] = [];
             for (let index = 0; index < response.data.length; index++) {
                 const medico = await getMedico(response.data[index].id_medico);
                 for (let j = 0; j < medico.data.length; j++) {
                     lista_profesionales.push(medico.data[j]);                
                 }
-                console.log("Medico: ", medico);                
+                //console.log("Medico: ", medico);                
             }
             setProfesionales(lista_profesionales);
-        });        
+        });    
+        
+        const nuevoDato = {
+            state:false,
+            id_prestacion: data.id_prestacion,
+            nombre_prestacion: data.nombre_prestacion
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato);  
     }, []);
     
     // const profesionales = [
@@ -47,9 +49,10 @@ export const Profesional = ({ data , onDataFromPage}) => {
         return items;
     }
     function cambiarDropdownProfesional(event){
-        //console.log("Event: ", event.target.value)
+        //console.log(data)
         setProfesional(event.target.textContent);
         const nuevoDato = {
+            state:true,
             id_prestacion: data.id_prestacion,
             nombre_prestacion: data.nombre_prestacion,
             id_profesional: event.target.id,

@@ -38,8 +38,18 @@ export const Horario = ({data , onDataFromPage}) => {
                 };
                 setSelectedTimes(times);
             });
-        }
 
+            const nuevoDato = {
+                state:false,
+                id_prestacion: data.id_prestacion,
+                nombre_prestacion: data.nombre_prestacion,
+                id_profesional: data.id_profesional,
+                nombre_profesional: data.nombre_profesional
+            }
+            setSendData(nuevoDato);
+            onDataFromPage(nuevoDato); 
+
+        }
         setSelectedTime(null);
     };
 
@@ -47,10 +57,11 @@ export const Horario = ({data , onDataFromPage}) => {
         setSelectedButton(time === selectedButton ? null : time);
         setSelectedTime(time);
         const nuevoDato = {
+            state: true,
             id_prestacion: data.id_prestacion,
             nombre_prestacion: data.nombre_prestacion,
-            id_profesional: data.target.id,
-            nombre_profesional: data.target.textContent,
+            id_profesional: data.id_profesional,
+            nombre_profesional: data.nombre_profesional,
             fecha: selectedDate,
             hora: selectedTime
         }
@@ -59,15 +70,24 @@ export const Horario = ({data , onDataFromPage}) => {
       };
 
     useEffect(() => {
-        console.log(data.id_profesional)
+        //console.log(data)
         getHorario(data.id_profesional).then(function(response){
             const fechas = [];
             for(var info of response.data){
                 fechas.push(info.fecha.slice(0,10));
             };
-            console.log("Response: ", fechas);
             setDates(fechas);
         });
+
+        const nuevoDato = {
+            state:false,
+            id_prestacion: data.id_prestacion,
+            nombre_prestacion: data.nombre_prestacion,
+            id_profesional: data.id_profesional,
+            nombre_profesional: data.nombre_profesional
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato);  
 
     }, []);
 
@@ -98,7 +118,7 @@ export const Horario = ({data , onDataFromPage}) => {
                         </div>
                         <Grid container spacing={2} justifyContent="center" marginBottom="10px">
                             {selectedTimes.map((time, index) => (
-                                <Grid item xs={3} key={index} margin={5}>
+                                <Grid item xs={3} key={index} margin={1}>
                                 <button
                                     type="button"
                                     className={`button_horas ${time === selectedButton ? 'selected' : ''}`}

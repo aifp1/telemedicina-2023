@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Prestaciones } from '../prestaciones/Prestaciones';
 import { Profesional } from '../profesional/Profesional';
 import { Horario } from '../horario/Horario';
+import { Paciente } from '../paciente/Paciente';
 import { Pago } from '../pago/Pago';
 import { NavbarCustom } from '../../components/navbarCustom/NavbarCustom';
 import { FooterCustom } from '../../components/footerCustom/FooterCustom';
@@ -11,7 +12,7 @@ import { cleanDigitSectionValue } from '@mui/x-date-pickers/internals/hooks/useF
 
 export const Inicio = () => {
     const [pagina, setPagina] = useState(0);
-    const [dataFromPage, setDataFromPage] = useState();
+    const [dataFromPage, setDataFromPage] = useState({state:false});
 
   function passData(data){
     //console.log("Data: ", data);
@@ -20,17 +21,16 @@ export const Inicio = () => {
 
 
   function seleccionarPagina() {
-    console.log("Pagina: ", pagina);
+    //console.log("Pagina: ", pagina);
     switch(pagina){
       case 0: 
-        console.log(dataFromPage);
         return <Prestaciones onDataFromPage={passData} ></Prestaciones>
       case 1:
         return <Profesional data={dataFromPage} onDataFromPage={passData}></Profesional>
       case 2:
         return <Horario data={dataFromPage} onDataFromPage={passData}></Horario>
       case 3:
-        return <div>Paciente</div>
+        return <Paciente></Paciente>
       case 4:
         return <Pago></Pago>
       case 5:
@@ -57,7 +57,7 @@ export const Inicio = () => {
             </div>
             <div className="col-12">
               <button type='button' className='btn btn-danger mx-4' onClick={paginaAtras}>Atras</button>
-              <button type='button' className='btn btn-success mx-4' onClick={paginaSiguiente} disabled={dataFromPage != undefined? false : true}>Siguiente</button>
+              <button type='button' className='btn btn-success mx-4' onClick={paginaSiguiente} disabled={dataFromPage.state? false : true}>Siguiente</button>
             </div>
             <div className="col-12 mt-5">
               <Link to='/login' className='link'>Iniciar sesion administrador</Link>              
