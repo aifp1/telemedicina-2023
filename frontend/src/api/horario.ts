@@ -4,3 +4,5 @@ export const getHorario = (id: number) => axios.get(`/horarios/getHorario/${id}`
 export const getHoras = (id:number, fecha:string) => axios.get(`/horarios/getHoras/${id}/${fecha}`);
 
 export const getHorarios = axios.get(`/horarios/getHorarios`);
+
+export const deleteHorario = (id: number) => axios.delete(`/horarios/deleteHorario/${id}`);

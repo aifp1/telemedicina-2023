@@ -1,6 +1,6 @@
 
 import React,{useEffect, useState } from "react";
-import { getCategorias,deleteCategoria } from "../../api/categorias";
+import { postCategoria } from "../../api/categorias";
 import { Link, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -17,25 +17,36 @@ import Avatar from '@mui/material/Avatar';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
-import { Divider, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Divider, Table, TableHead, TableBody, TableRow, TableCell, TextField } from '@mui/material';
 
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-export const Categoriasadmin = () => {
-    const [categorias, setCategorias] = useState([]);
+export const Insertcategorias = () => {
+    const [categoriaNombre, setCategoriaNombre] = useState("");
 
-    useEffect(() => {
-      getCategorias.then(function(response){
-        setCategorias(response.data);
-      });
+    // useEffect(() => {
+    //   getCategorias.then(function(response){
+    //     setCategorias(response.data);
+    //   });
       
-    }, []);
-    const handleDelete = (id:any) => {
-      deleteCategoria(id)
-      window.location.href = "/auth/dashboard/admin/Categorias";
-    }
+    // }, []);
+    const handleSubmit = (event: any) => {
+        // Get the value of the input
+        const categoriaNombre = event.target.elements.categoriaNombre.value;
+        postCategoria(categoriaNombre)
+        // Do something with the value
+        }
+
+    // const handleSubmit = (event:any) => {
+    //     event.preventDefault();
+    //     console.log(event.target.elements.categoriaNombre)
+    //     // Agrega la categoría a la variable
+    //     setCategoriaNombre(event.target.elements.categoriaNombre.value);
+        
+    //     postCategoria(categoriaNombre)
+    //   };
 
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -132,35 +143,11 @@ export const Categoriasadmin = () => {
           </Toolbar>
         </AppBar>
         <Box sx={{ marginTop: '100px' }}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Nombre</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {console.log(categorias)}
-                {categorias.map((categoria) => (
-                  
-                    <TableRow key={categoria.id_categoria}>
-                    <TableCell>{categoria.id_categoria}</TableCell>
-                    <TableCell>{categoria.nombre_categoria}</TableCell>
-                    <TableCell>
-                    <Button variant="contained" color="error" onClick={() => handleDelete(categoria.id_categoria)}>
-                    Eliminar
-                    </Button>
-                    </TableCell>
-                    </TableRow>
-                ))}
-                </TableBody>
-          </Table>
+        <form onSubmit={handleSubmit}>
+        <input type="text" name="categoriaNombre" placeholder="Nombre de la categoría" />
+        <Button type="submit">Enviar</Button>
+        </form>
         </Box>
-        <Button variant="contained" color="success" onClick={() => {
-            location.href = "/auth/dashboard/admin/Categorias/Insertar";
-                }}>
-              Agregar
-        </Button>
       </Box>
     </Box>
     

@@ -7,9 +7,11 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './ProtectedRoute';
 import { Medico } from './pages/medico/Medico';
 import { Categoriasadmin } from './pages/categorias-admin/Categoriasadmin';
+import { Insertcategorias, } from './pages/categorias-admin/Insertcategorias';
 import { Prestacionesadmin } from './pages/prestaciones-admin/Prestacionesadmin';
 import { Medicosadmin } from './pages/medico-admin/Medicoadmin';
 import { Horarioadmin } from './pages/horario-admin/Horarioadmin';
+import { Insertmedico } from './pages/medico-admin/Insertmedico';
 
 
 const App = () => {
@@ -22,12 +24,14 @@ const App = () => {
           <Route path='/login' element={<Login />}></Route>
           <Route element={<ProtectedRoute />}>
             <Route path='/auth/dashboard/admin' element={<Administrador />}></Route>
-            <Route path='/auth/dashboard/admin/Categorias' element={<Categoriasadmin />}></Route>
-            <Route path='/auth/dashboard/admin/Prestaciones' element={<Prestacionesadmin />}></Route>
-            <Route path='/auth/dashboard/admin/Profesional' element={<Medicosadmin />}></Route>
-            <Route path='/auth/dashboard/admin/Horario' element={<Horarioadmin />}></Route>
             <Route path='/auth/dashboard/medico' element={<Medico />}></Route>
           </Route>
+          <Route path='/auth/dashboard/admin/Categorias' element={<Categoriasadmin />}></Route>
+          <Route path='/auth/dashboard/admin/Categorias/Insertar' element={<Insertcategorias />}></Route>
+          <Route path='/auth/dashboard/admin/Prestaciones' element={<Prestacionesadmin />}></Route>
+          <Route path='/auth/dashboard/admin/Profesional' element={<Medicosadmin />}></Route>
+          <Route path='/auth/dashboard/admin/Profesional/Insertar' element={<Insertmedico />}></Route>
+          <Route path='/auth/dashboard/admin/Horario' element={<Horarioadmin />}></Route>
         </Routes>
       </Router>
     </AuthProvider>

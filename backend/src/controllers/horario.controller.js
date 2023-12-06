@@ -41,7 +41,7 @@ async function addHorario(request, response){
 async function deleteHorario(request, response){
     try {
         const { id_horario } = request.body;
-        const delete_horario = await pool.query('delete from horario where id_horario = ?', id_horario);
+        const delete_horario = await pool.query('delete from horario where id_horario = ?', request.params.id);
         console.log("Delete: ", delete_horario);
         return response.json(delete_horario);
     } catch (error) {

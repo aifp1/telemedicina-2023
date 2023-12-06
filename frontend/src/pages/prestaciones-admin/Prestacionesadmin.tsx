@@ -34,6 +34,8 @@ const handleDelete = (id_prestacion: number) => {
   deletePrestacion(id_prestacion)
   window.location.href = "/auth/dashboard/admin/Prestaciones";
 }
+
+
 useEffect(() => {
   getPrestaciones.then(function(response){
     setPrestaciones(response.data);

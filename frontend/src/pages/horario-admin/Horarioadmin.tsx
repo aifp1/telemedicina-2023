@@ -15,7 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import Button from '@mui/material/Button';
 import { Divider, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
-import { getHorarios } from "../../api/horario";
+import { deleteHorario,getHorarios } from "../../api/horario";
 
 const drawerWidth = 240;
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -29,6 +29,14 @@ export const Horarioadmin = () => {
         setHorarios(response.data);
     })
     }, []);
+
+    const handleDelete = (id: any) => {
+      deleteHorario(id)
+      window.location.href = "/auth/dashboard/admin/Horario";
+  }
+
+const [open, setOpen] = React.useState(false);
+
   
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -143,14 +151,9 @@ export const Horarioadmin = () => {
                       <TableCell>{horario.duracion}</TableCell>
                       <TableCell>{horario.estado}</TableCell>
                       <TableCell>
-                      <Button variant="contained" color="error" onClick={() => handleDelete(horario.id_categoria)}>
+                      <Button variant="contained" color="error" onClick={() => handleDelete(horario.id_horario)}>
                       Eliminar
                       </Button>
-                      </TableCell>
-                      <TableCell>
-                          <Button variant="contained" color="primary" onClick={() => handleEdit(horario.id_categoria)}>
-                          Editar
-                          </Button>
                       </TableCell>
                       </TableRow>
                   ))}
@@ -158,7 +161,7 @@ export const Horarioadmin = () => {
             </Table>
             
           </Box>
-          <Button variant="contained" color="success" onClick={() => handleInsert(horario.id_categoria)}>
+          <Button variant="contained" color="success" onClick={() => handleInsert()}>
                           Agregar
                           </Button>
         </Box>

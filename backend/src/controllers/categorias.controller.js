@@ -23,7 +23,7 @@ async function getCategoria(request, response){
 async function addCategoria(request, response){
     try {
         const { nombre_categoria } = request.body
-        const newCategoria = await pool.query('insert into categorias (nombre_categoria) values (?)', [nombre_categoria]);
+        const newCategoria = await pool.query('insert into categorias (nombre_categoria) values (?)', [request.params.nombre]);
         console.log("Result: ", newCategoria);
         return response.json({
             status: 200,

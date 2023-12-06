@@ -24,7 +24,9 @@ async function getMedico(request, response){
 async function addMedico(request, response){
     try {
         console.log("Request body", request.body);
-        const { email, password, nombres, apellidos, lugar_atencion, id_administrador } = request.body;
+        const { nombres, apellidos, lugar_atencion, id_administrador } = request.body;
+        const email = "test1@admin.cl"
+        const password="test1"
         const userFound = await pool.query('select * from autorizacion where email_autorizacion = ?', email);
         if(userFound[0] === null) return response.status(400).json(['Email is not valid']);
         const newMedico = await pool.query('insert into medico (nombres, apellidos, lugar_atencion, id_administrador) values (?, ?, ?, ?)', [nombres, apellidos, lugar_atencion, id_administrador]);

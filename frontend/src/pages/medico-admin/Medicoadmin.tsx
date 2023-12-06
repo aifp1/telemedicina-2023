@@ -32,7 +32,7 @@ export const Medicosadmin = () => {
 
     const handleDelete = (id: any) => {
         deleteMedico(id)
-    
+        window.location.href = "/auth/dashboard/admin/Profesional";
     }
   
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -156,9 +156,11 @@ export const Medicosadmin = () => {
             </Table>
             
           </Box>
-          <Button variant="contained" color="success" onClick={() => handleInsert(medico.id_categoria)}>
-                          Agregar
-                          </Button>
+          <Button variant="contained" color="success" onClick={() => {
+            location.href = "/auth/dashboard/admin/Profesional/Insertar";
+                }}>
+              Agregar
+        </Button>
         </Box>
       </Box>
   )
