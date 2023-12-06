@@ -73,11 +73,18 @@ export const Horario = ({data , onDataFromPage}) => {
         //console.log(data)
         getHorario(data.id_profesional).then(function(response){
             const fechas = [];
+            var first = true;
             for(var info of response.data){
+                if(first){
+                    setSelectedDate(dayjs(info.fecha.slice(0,10)));
+                    
+                    first = false;
+                }
                 fechas.push(info.fecha.slice(0,10));
             };
             setDates(fechas);
-        });
+        }); 
+        //setSelectedDate()
 
         const nuevoDato = {
             state:false,
@@ -88,6 +95,8 @@ export const Horario = ({data , onDataFromPage}) => {
         }
         setSendData(nuevoDato);
         onDataFromPage(nuevoDato);  
+
+        
 
     }, []);
 
