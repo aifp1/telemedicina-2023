@@ -1,48 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { Card, Form, Button } from "react-bootstrap";
 
-function validarRut(rut) {
-  rut = rut.replace(/\s|-/g, '');
+import { addPaciente } from '../../api/paciente';
 
-  if (!/^[0-9]+[kK]?$/.test(rut)) {
-    return false;
-  }
+// function validarRut(rut) {
+//   rut = rut.replace(/\s|-/g, '');
 
-  const digitos = Array.from(rut);
-  const dv = digitos.pop().toUpperCase();
-  const suma = digitos.reverse().reduce((acumulador, digito, indice) => {
-    return acumulador + parseInt(digito) * (indice % 6 + 2);
-  }, 0);
+//   if (!/^[0-9]+[kK]?$/.test(rut)) {
+//     return false;
+//   }
 
-  const resto = suma % 11;
-  const resultado = resto === 0 ? 0 : 11 - resto;
+//   const digitos = Array.from(rut);
+//   const dv = digitos.pop().toUpperCase();
+//   const suma = digitos.reverse().reduce((acumulador, digito, indice) => {
+//     return acumulador + parseInt(digito) * (indice % 6 + 2);
+//   }, 0);
 
-  return (resultado === parseInt(dv)) || (dv === 'K' && resultado === 10);
-}
+//   const resto = suma % 11;
+//   const resultado = resto === 0 ? 0 : 11 - resto;
 
-export const Paciente = ({}) => {
+//   return (resultado === parseInt(dv)) || (dv === 'K' && resultado === 10);
+// }
+
+export const Paciente = ({data , onDataFromPage}) => {
   const [check, setCheck] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [rut, setRut] = useState('');
   const [rutValido, setRutValido] = useState(true);
   const [email, setEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState(true);
+  const [sendData, setSendData] = useState({});
 
   useEffect(() => {
     // Código de efecto si es necesario
   }, []);
 
-  const handleCheckChange = () => {
-    setCheck(!check);
-    setShowForm(!showForm);
-  };
+  // const handleCheckChange = () => {
+  //   setCheck(!check);
+  //   setShowForm(!showForm);
+  // };
 
-  const handleRutChange = (event) => {
-    const nuevoRut = event.target.value;
-    setRut(nuevoRut);
-    // Validar el RUT al cambiar
-    setRutValido(validarRut(nuevoRut));
-  };
+  // const handleRutChange = (event) => {
+  //   const nuevoRut = event.target.value;
+  //   setRut(nuevoRut);
+  //   // Validar el RUT al cambiar
+  //   setRutValido(validarRut(nuevoRut));
+  // };
 
   const handleEmailChange = (event) => {
     const newEmail = event.target.value;
@@ -53,13 +56,61 @@ export const Paciente = ({}) => {
     setEmailIsValid(emailRegex.test(newEmail));
   };
 
+  const almacenarPaciente = (event) => {
+    event.preventDefault();
+    // let lista =
+    // console.log("Even: ", event);
+    // console.log("Event: ", event.target);
+    // for (let index = 0; index < event.target.length-1; index++) {
+    //   console.log("Event: ", event.target[index].value);
+    // }
+    // // console.log("Event: ", event.target[0].value);
+    // // console.log("Event: ", event.target[1].value);
+    let objeto = {
+      state:false,
+      nombres: event.target[0].value,
+      apellidos: event.target[1].value + ' ' + event.target[2].value,
+      fecha_nacimiento: event.target[6].value,
+      email: event.target[3].value,
+      telefono: event.target[4].value,
+      comuna: event.target[5].value,
+      prevision_salud: event.target[7].value,
+    }
+    addPaciente(objeto).then(function(response){
+      console.log("Response: ", response);
+      // console.log("Pagina: ", pagina);
+      setSendData({
+        state: true,
+        nombres: response.data.nombres,
+        apellidos: response.data.apellidos,
+        fecha_nacimiento: response.data.fecha_nacimiento,
+        email: response.data.email,
+        telefono: response.data.telefono,
+        comuna: response.data.comuna,
+        prevision_salud: response.data.prevision_salud,
+      })
+      onDataFromPage({
+        state: true,
+        nombres: response.data.nombres,
+        apellidos: response.data.apellidos,
+        fecha_nacimiento: response.data.fecha_nacimiento,
+        email: response.data.email,
+        telefono: response.data.telefono,
+        comuna: response.data.comuna,
+        prevision_salud: response.data.prevision_salud,
+      })
+    })
+    // pagina = pagina + 1;
+    console.log("Objt: ", objeto);
+  }
+
   return (
     <div className="row mb-4">
-      <div className="col-12" style={{ fontSize: "xx-large", fontWeight: "bold", color: "white" }}>
+      {/* <div className="col-12" style={{ fontSize: "xx-large", fontWeight: "bold", color: "white" }}>
         Ingrese su RUT
-      </div>
+      </div> */}
       <Card style={{ width: "25%", height: "auto", margin: "auto" }}>
-        <div style={{ display: check ? "none" : "block" }}>
+        {/* <div>
           <input
             style={{ margin: "10px", borderColor: rutValido ? '' : 'red'}}
             type="text"
@@ -75,9 +126,9 @@ export const Paciente = ({}) => {
           label="No poseo identificación"
           checked={check}
           onChange={handleCheckChange}
-        />
-        {showForm && (
-          <Form>
+        /> */}
+        
+          <Form onSubmit={almacenarPaciente}>
             {/* Agrega los campos del formulario de registro aquí */}
             <Form.Group className="mb-3" controlId="Nombre">
               <Form.Label>Nombre</Form.Label>
@@ -131,7 +182,6 @@ export const Paciente = ({}) => {
               Registrarse
             </Button>
           </Form>
-        )}
       </Card>
     </div>
   );

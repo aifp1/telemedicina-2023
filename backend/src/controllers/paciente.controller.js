@@ -24,16 +24,20 @@ async function getPaciente(request, response){
 
 async function addPaciente(request, response){
     try {
-        const { identificacion, rut_paciente, nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud } = request.body;
-        const newPaciente = await pool.query('insert into paciente (identificacion, rut_paciente, nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud) values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [identificacion, rut_paciente, nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud]);
+        const { nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud } = request.body;
+        const newPaciente = await pool.query('insert into paciente (nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud) values (?, ?, ?, ?, ?, ?, ?)', [nombres, apellidos, fecha_nacimiento, email, telefono, comuna, prevision_salud]);
         console.log("New Paciente: ", newPaciente);
         return response.json({
             status: 200,
             message: "Paciente creado",
             id: newPaciente[0].insertId,
-            rut_paciente,
             nombres,
             apellidos,
+            fecha_nacimiento,
+            email,
+            telefono,
+            comuna,
+            prevision_salud,
         });
     } catch (error) {
         console.log("Error: ", error)

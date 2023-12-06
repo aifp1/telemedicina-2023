@@ -30,7 +30,7 @@ export const Inicio = () => {
       case 2:
         return <Horario data={dataFromPage} onDataFromPage={passData}></Horario>
       case 3:
-        return <Paciente></Paciente>
+        return <Paciente data={dataFromPage} onDataFromPage={passData}></Paciente>
       case 4:
         return <Pago></Pago>
       case 5:
