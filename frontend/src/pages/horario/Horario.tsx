@@ -8,11 +8,13 @@ import { Grid } from "@mui/material";
 import { getHorario, getHoras } from "../../api/horario";
 import { Card } from "react-bootstrap";
 
-export const Horario = ({data}) => {
+export const Horario = ({data , onDataFromPage}) => {
     const [selectedTimes, setSelectedTimes] = useState<String[]>([]);
     const [selectedDates, setSelectedDates] = useState<Dayjs[]>([]);
     const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
+    const [selectedButton, setSelectedButton] = useState(null);
+    const [sendData, setSendData] = useState({});
     
 
     const setDates = (fechas: string[]) => {
@@ -35,14 +37,26 @@ export const Horario = ({data}) => {
                     times.push(time.hora_ini.slice(0,5));
                 };
                 setSelectedTimes(times);
-                console.log(selectedTimes);
-                //setSelectedTimes = 
             });
         }
 
         setSelectedTime(null);
     };
 
+    const handleButtonClick = (time) => {
+        setSelectedButton(time === selectedButton ? null : time);
+        setSelectedTime(time);
+        const nuevoDato = {
+            id_prestacion: data.id_prestacion,
+            nombre_prestacion: data.nombre_prestacion,
+            id_profesional: data.target.id,
+            nombre_profesional: data.target.textContent,
+            fecha: selectedDate,
+            hora: selectedTime
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato); 
+      };
 
     useEffect(() => {
         console.log(data.id_profesional)
@@ -54,9 +68,6 @@ export const Horario = ({data}) => {
             console.log("Response: ", fechas);
             setDates(fechas);
         });
-        console.log(data);
-
-        
 
     }, []);
 
@@ -67,7 +78,7 @@ export const Horario = ({data}) => {
                     <p style={{ color: '#ffffff' }}> Seleccionar Horario</p>
                 </div>
                 <div className="col-12">
-                    <Grid container justifyContent="center" alignItems="center" spacing={2}>
+                    <Grid container justifyContent="center" alignItems="center" spacing={2} marginBottom={"10px"}>
                         <Grid item xs={12} sm={6}>
                             <StaticDatePicker
                                 orientation="landscape"
@@ -78,12 +89,27 @@ export const Horario = ({data}) => {
                                 value={selectedDate}
                                 onChange={handleDateChange}
                             />
-                            <h4>{dayjs(selectedDate).format('DD/MM/YYYY')}</h4>
                         </Grid>
-                        <Card>
-                            
-                        </Card>
                     </Grid>
+                    <Card style={{ width: "49.5%", height:"auto", maxHeight: "300px", overflowY: selectedTimes.length * 50 > 300 ? "auto" : "hidden", margin: "auto"}}>
+                        <div className="col-12" style={{ marginBottom: "10px"}}>
+                            <p> Seleccionar tu hora</p>
+                            {selectedDate === null && <p style={{ color: 'grey' }}> Selecciona una fecha primero</p>}
+                        </div>
+                        <Grid container spacing={2} justifyContent="center" marginBottom="10px">
+                            {selectedTimes.map((time, index) => (
+                                <Grid item xs={3} key={index} margin={5}>
+                                <button
+                                    type="button"
+                                    className={`button_horas ${time === selectedButton ? 'selected' : ''}`}
+                                    onClick={() => handleButtonClick(time)}
+                                >
+                                    {time}
+                                </button>
+                                </Grid>
+                            ))}
+                        </Grid>
+                     </Card>
                 </div>
             </div>
         </LocalizationProvider>

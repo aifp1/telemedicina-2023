@@ -8,7 +8,11 @@ export const Profesional = ({ data , onDataFromPage}) => {
     //console.log("Data ya en profesional: ", data);
 
     useEffect(() => {
-        //console.log(data.id_prestacion);
+        const nuevoDato = {
+            state: false
+        }
+        setSendData(nuevoDato);
+        onDataFromPage(nuevoDato); 
         getMedico(data.id_prestacion).then(function(response){
             //console.log("Response: ", response);
             setProfesionales(response.data);
