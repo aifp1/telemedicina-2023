@@ -6,8 +6,10 @@ import { Dayjs } from "dayjs";
 import * as dayjs from "dayjs";
 import { Grid } from "@mui/material";
 import { getHorario, getHoras } from "../../api/horario";
+import { Card } from "react-bootstrap";
 
 export const Horario = ({data}) => {
+    const [selectedTimes, setSelectedTimes] = useState<String[]>([]);
     const [selectedDates, setSelectedDates] = useState<Dayjs[]>([]);
     const [selectedTime, setSelectedTime] = useState<Dayjs | null>(null);
     const [selectedDate, setSelectedDate] = useState<Dayjs | null>(null);
@@ -27,9 +29,14 @@ export const Horario = ({data}) => {
         setSelectedDate(date);
         if(date){
             const formattedDate = date.toDate().toISOString();
-            console.log(data.id_profesional);
-            getHoras(data.id_profesional, formattedDate).then(function(response){
-                console.log(response.data);
+            getHoras(data.id_profesional, formattedDate.slice(0,10)).then(function(response){
+                const times = [];
+                for(var time of response.data){
+                    times.push(time.hora_ini.slice(0,5));
+                };
+                setSelectedTimes(times);
+                console.log(selectedTimes);
+                //setSelectedTimes = 
             });
         }
 
@@ -73,6 +80,9 @@ export const Horario = ({data}) => {
                             />
                             <h4>{dayjs(selectedDate).format('DD/MM/YYYY')}</h4>
                         </Grid>
+                        <Card>
+                            
+                        </Card>
                     </Grid>
                 </div>
             </div>
