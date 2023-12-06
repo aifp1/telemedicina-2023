@@ -169,7 +169,7 @@ CREATE TABLE `medico` (
   PRIMARY KEY (`id_medico`),
   KEY `id_administrador` (`id_administrador`),
   CONSTRAINT `medico_ibfk_3` FOREIGN KEY (`id_administrador`) REFERENCES `administrador` (`id_administrador`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `medico` (
 
 LOCK TABLES `medico` WRITE;
 /*!40000 ALTER TABLE `medico` DISABLE KEYS */;
-INSERT INTO `medico` VALUES (1,'Amparo','Morales Sotomayor','calle Errazuriz 1042',1),(2,'Barbara','Perez Dejeas','Condell 1490',1),(3,'Beda','Carpio Mordones','Condell 1490',1),(4,'Camila','Lizama Rivera','Condell 1490',1),(5,'Carlos','Cuadros Gutierrez','Condell 1490',1),(6,'Constanza','Roman Nuñez','Condell 1490',1),(7,'Daniel Andres','Vicencio Godoy','Condell 1490',1);
+INSERT INTO `medico` VALUES (1,'Amparo','Morales Sotomayor','calle Errazuriz 1042',1),(2,'Barbara','Perez Dejeas','Condell 1490',1),(3,'Beda','Carpio Mordones','Condell 1490',1),(4,'Camila','Lizama Rivera','Condell 1490',1),(5,'Carlos','Cuadros Gutierrez','Condell 1490',1),(6,'Constanza','Roman Nuñez','Condell 1490',1),(7,'Daniel Andres','Vicencio Godoy','Condell 1490',1),(8,'Darla Brunett','Ibañez','Condell 1490',1),(9,'Darly Yerny ','Ortiz Gutierrez','Condell 1490',1),(10,'Felipe','Mancilla Osorio','Condell 1490',1),(11,'Fernando','Espinoza Osorio','Condell 1490',1),(12,'Javier','Ortiz Garrido','Condell 1490',1),(13,'Jorge Andres','Galaz Alvarez','Condell 1490',1),(14,'Jorge Luis Eduardo','Collao Nuñez','Condell 1490',1),(15,'Konstanza','Gonzalez Barrera','Condell 1490',1),(16,'Maria Eva','Saavedra Saavedra','Condell 1490',1),(17,'Montserrat','Toledo Astudillo','Condell 1490',1),(18,'Romina','Lecaros Hernandez','Condell 1490',1),(19,'Sebastian','Vargas Salas','Condell 1490',1),(20,'Sergio','Alvarez Oyanedel','Condell 1490',1),(21,'Tamara','Soto Gonzalez','Condell 1490',1),(22,'Tatiana','Cifuentes Antris','Condell 1490',1);
 /*!40000 ALTER TABLE `medico` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +254,7 @@ CREATE TABLE `prestaciones_medico` (
   KEY `id_medico` (`id_medico`),
   CONSTRAINT `prestaciones_medico_ibfk_1` FOREIGN KEY (`id_prestacion`) REFERENCES `prestaciones` (`id_prestacion`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `prestaciones_medico_ibfk_2` FOREIGN KEY (`id_medico`) REFERENCES `medico` (`id_medico`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -263,6 +263,7 @@ CREATE TABLE `prestaciones_medico` (
 
 LOCK TABLES `prestaciones_medico` WRITE;
 /*!40000 ALTER TABLE `prestaciones_medico` DISABLE KEYS */;
+INSERT INTO `prestaciones_medico` VALUES (1,1,2),(2,1,15),(3,1,9),(4,1,8),(5,1,10),(6,5,18),(7,5,14),(8,3,18),(9,3,14),(10,2,18),(11,2,14),(12,9,18),(13,9,14),(14,12,5),(15,19,5),(16,15,5),(17,25,5),(18,28,5),(19,11,5),(20,18,5),(21,29,5),(22,33,7),(23,33,13),(24,39,13),(25,34,7),(26,34,13),(27,36,7),(28,36,13),(29,38,7),(30,37,7),(31,37,13),(32,41,22),(33,41,12),(34,41,17),(35,44,20),(36,44,17),(37,45,17),(38,42,22),(39,42,12),(40,42,17),(41,46,17),(42,48,4),(43,55,4),(44,61,21),(45,61,6),(46,64,21),(47,70,6),(48,69,6),(49,57,6),(50,57,21),(51,58,21),(52,59,21),(53,59,6),(54,60,21),(55,71,1),(56,72,3);
 /*!40000 ALTER TABLE `prestaciones_medico` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -275,4 +276,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-05 21:38:20
+-- Dump completed on 2023-12-06  0:26:30

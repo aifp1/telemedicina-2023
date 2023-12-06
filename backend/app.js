@@ -13,6 +13,7 @@ const medicos = require('./src/routes/medico.router');
 const paciente = require('./src/routes/paciente.router');
 const prestaciones = require('./src/routes/prestaciones.router');
 const horas_pacientes = require('./src/routes/horas_pacientes.router');
+const prestaciones_medico = require('./src/routes/prestaciones_medico.router');
 
 const app = express();
 
@@ -36,5 +37,6 @@ app.use('/api', horas_pacientes);
 app.use('/api', medicos);
 app.use('/api', paciente);
 app.use('/api', prestaciones);
+app.use('/api', prestaciones_medico);
 
 module.exports = app;

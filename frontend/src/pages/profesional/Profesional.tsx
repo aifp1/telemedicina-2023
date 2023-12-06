@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { getMedico } from "../../api/medico"
+import { getPrestacionMedico } from '../../api/prestaciones_medico';
+import { getMedico } from '../../api/medico';
 
 export const Profesional = ({ data , onDataFromPage}) => {
     const [profesional, setProfesional] = useState('-- PROFESIONAL --');
@@ -8,10 +9,19 @@ export const Profesional = ({ data , onDataFromPage}) => {
     //console.log("Data ya en profesional: ", data);
 
     useEffect(() => {
-        //console.log(data.id_prestacion);
-        getMedico(data.id_prestacion).then(function(response){
-            //console.log("Response: ", response);
-            setProfesionales(response.data);
+
+        console.log(data.id_prestacion);
+        getPrestacionMedico({id_prestacion: data.id_prestacion}).then(async function(response){
+            console.log("Response: ", response);
+            let lista_profesionales: any[] = [];
+            for (let index = 0; index < response.data.length; index++) {
+                const medico = await getMedico(response.data[index].id_medico);
+                for (let j = 0; j < medico.data.length; j++) {
+                    lista_profesionales.push(medico.data[j]);                
+                }
+                console.log("Medico: ", medico);                
+            }
+            setProfesionales(lista_profesionales);
         });        
     }, []);
     
